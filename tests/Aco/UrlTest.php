@@ -9,7 +9,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
     }
     
     /**
-     * @expectedException Aco\BadUrlException
+     * @expectedException Aco\Exception\BadUrl
      */
     public function testWrong()
     {
