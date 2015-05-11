@@ -12,6 +12,8 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler());
 		
 		$c = new AddArticleCollectionCommand('title', 'description');
-		$cb->handle($c);
+		$id = $cb->handle($c);
+		
+		$this->assertEquals('uuid', $id);
 	}
 }

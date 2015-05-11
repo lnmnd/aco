@@ -14,5 +14,6 @@ class AddArticleCollectionHandler implements Handler
 	public function handle($command)
 	{
 		echo "handle ".$command->title;
+		return 'uuid';
 	}
 }
