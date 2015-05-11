@@ -8,7 +8,11 @@ class Url
 	
 	public function __construct($url)
 	{
-		$this->url = $url;
+		if (filter_var($url, FILTER_VALIDATE_URL)) {
+			$this->url = $url;
+		} else {
+			throw new BadUrlException();
+		}
 	}
 	
 	public function getUrl()
