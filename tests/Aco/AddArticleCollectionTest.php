@@ -11,7 +11,7 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$cb = new CommandBus();
 		$cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler());
 		
-		$c = new AddArticleCollectionCommand();
+		$c = new AddArticleCollectionCommand('title', 'description');
 		$cb->handle($c);
 	}
 }
