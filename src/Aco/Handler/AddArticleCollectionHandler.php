@@ -4,7 +4,6 @@ namespace Aco\Handler;
 
 use Aco\Handler;
 use Aco\Command\AddArticleCollectionCommand;
-use Aco\DateTimeGetter;
 use Aco\ArticleCollectionRepository;
 use Aco\ArticleCollection;
 
@@ -14,15 +13,10 @@ class AddArticleCollectionHandler implements Handler
 	 * @var ArticleCollectionRepository
 	 */
 	private $articleCollectionRepository;
-	/**
-	 * @var DateTimeGetter
-	 */
-	private $dateTimeGetter;
 	
-	public function __construct(ArticleCollectionRepository $articleCollectionRepository, DateTimeGetter $dateTimeGetter)
+	public function __construct(ArticleCollectionRepository $articleCollectionRepository)
 	{
 		$this->articleCollectionRepository = $articleCollectionRepository;
-		$this->dateTimeGetter = $dateTimeGetter;
 	}
 	
 	/**
@@ -32,8 +26,6 @@ class AddArticleCollectionHandler implements Handler
 	public function handle($command)
 	{
 		$articleCollection = new ArticleCollection($command->title, $command->description);
-		// just call
-		$this->dateTimeGetter->now();
 		$this->articleCollectionRepository->add($articleCollection);
 		
 		return $articleCollection->getUuid();
