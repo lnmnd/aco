@@ -25,8 +25,8 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$acr = new FakeArticleCollectionRepository();
 		$cb = new CommandBus();
 		$cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler($acr));
-		
-		$c = new AddArticleCollectionCommand('title', 'description');
+		$urls = ['http://localhost/a1', 'http://localhost/a2'];
+		$c = new AddArticleCollectionCommand('title', 'description', $urls);
 		$uuid = $cb->handle($c);
 		
 		$this->assertEquals(36, strlen($uuid));

@@ -10,6 +10,10 @@ class ArticleCollection
 	private $date;
 	private $title;
 	private $description;
+	/**
+	 * @var Article[]
+	 */
+	private $articles;
 	
 	public function __construct($title, $description)
 	{
@@ -17,6 +21,15 @@ class ArticleCollection
 		$this->date = new \DateTime();
 		$this->title = $title;
 		$this->description = $description;
+		$this->articles = [];
+	}
+	
+	/**
+	 * @return void
+	 */
+	public function addArticle(Article $article)
+	{
+		$this->articles[] = $article;
 	}
 	
 	public function getUuid()
