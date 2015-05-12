@@ -6,7 +6,7 @@ use Aco\Command\AddArticleCollectionCommand;
 use Aco\Command\Aco\Command;
 use Aco\DateTimeGetter;
 
-class DummyDateTimeGetter implements DateTimeGetter
+class FakeDateTimeGetter implements DateTimeGetter
 {
 	private $called = false;
 	
@@ -25,7 +25,7 @@ class DummyDateTimeGetter implements DateTimeGetter
 class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 	public function testAdd()
 	{
-		$dtg = new DummyDateTimeGetter();
+		$dtg = new FakeDateTimeGetter();
 		$cb = new CommandBus();
 		$cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler($dtg));
 		
