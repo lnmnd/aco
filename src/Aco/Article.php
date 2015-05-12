@@ -10,5 +10,6 @@ class Article
 	public function __construct(UrlFetcher $urlFetcher, Url $url)
 	{
 		$this->url = $url;
+		$this->originalContent = $urlFetcher->fetch($url);
 	}
 }

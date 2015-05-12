@@ -24,8 +24,11 @@ class FakeArticleCollectionRepository implements ArticleCollectionRepository
 
 class FakeUrlFetcher implements UrlFetcher
 {
+	public $urls = [];
+	
 	public function fetch(Url $url)
 	{
+		$this->urls[] = $url;
 		return 'fake content';
 	}
 }
@@ -34,7 +37,8 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 	public function testAdd()
 	{
 		$acr = new FakeArticleCollectionRepository();
-		$af = new ArticleFactory(new FakeUrlFetcher());
+		$fuf = new FakeUrlFetcher();
+		$af = new ArticleFactory($fuf);
 		$cb = new CommandBus();
 		$cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler($acr, $af));
 		$urls = ['http://localhost/a1', 'http://localhost/a2'];
@@ -44,5 +48,6 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(36, strlen($uuid));
 		$this->assertEquals(true, $acr->called);
 		$this->assertEquals($uuid, $acr->articleCollection->getUuid());
+		$this->assertTrue(0 < count($fuf->urls));
 	}
 }
