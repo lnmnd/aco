@@ -8,9 +8,17 @@ use Aco\DateTimeGetter;
 
 class DummyDateTimeGetter implements DateTimeGetter
 {
+	private $called = false;
+	
 	public function now()
 	{
+		$this->called = true;
 		return null;
+	}
+	
+	public function isCalled()
+	{
+		return $this->called;
 	}
 }
 
@@ -24,6 +32,7 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$c = new AddArticleCollectionCommand('title', 'description');
 		$id = $cb->handle($c);
 		
+		$this->assertEquals(true, $dtg->isCalled());
 		$this->assertEquals('uuid', $id);
 	}
 }
