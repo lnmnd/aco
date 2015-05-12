@@ -37,6 +37,6 @@ class AddArticleCollectionHandler implements Handler
 		$this->dateTimeGetter->now();
 		$this->articleCollectionRepository->add($articleCollection);
 		
-		return 'uuid';
+		return $articleCollection->getUuid();
 	}
 }

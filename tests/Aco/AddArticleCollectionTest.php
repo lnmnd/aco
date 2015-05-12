@@ -45,11 +45,12 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler($acr, $dtg));
 		
 		$c = new AddArticleCollectionCommand('title', 'description');
-		$id = $cb->handle($c);
+		$uuid = $cb->handle($c);
 		
 		$this->assertEquals(true, $dtg->isCalled());
-		$this->assertEquals('uuid', $id);
+		$this->assertEquals(36, strlen($uuid));
 		
 		$this->assertEquals(true, $acr->called);
+		$this->assertEquals($uuid, $acr->articleCollection->getUuid());
 	}
 }
