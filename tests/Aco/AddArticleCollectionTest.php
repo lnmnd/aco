@@ -48,6 +48,6 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(36, strlen($uuid));
 		$this->assertEquals(true, $acr->called);
 		$this->assertEquals($uuid, $acr->articleCollection->getUuid());
-		$this->assertTrue(0 < count($fuf->urls));
+		$this->assertEquals(count($urls), count($fuf->urls));
 	}
 }
