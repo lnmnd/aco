@@ -32,7 +32,7 @@ class AddArticleCollectionHandler implements Handler
 	public function handle($command)
 	{
 		echo "handle ".$command->title;
-		$articleCollection = new ArticleCollection();
+		$articleCollection = new ArticleCollection($command->title, $command->description);
 		// just call
 		$this->dateTimeGetter->now();
 		$this->articleCollectionRepository->add($articleCollection);
