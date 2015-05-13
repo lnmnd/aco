@@ -15,13 +15,13 @@ class ArticleCollection
 	 */
 	private $articles;
 	
-	public function __construct($title, $description)
+	public function __construct($title, $description, $articles)
 	{
 		$this->uuid = Uuid::uuid4();
 		$this->date = new \DateTime();
 		$this->title = $title;
 		$this->description = $description;
-		$this->articles = [];
+		$this->articles = $articles;
 	}
 	
 	/**

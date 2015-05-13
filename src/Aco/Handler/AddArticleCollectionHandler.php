@@ -33,11 +33,11 @@ class AddArticleCollectionHandler implements Handler
 	 */
 	public function handle($command)
 	{
-		$articleCollection = new ArticleCollection($command->title, $command->description);
+		$articles = [];		
 		foreach ($command->urls as $url) {
-			$article = $this->articleFactory->make(new Url($url));
-			$articleCollection->addArticle($article);
+			$articles[] = $this->articleFactory->make(new Url($url));
 		}
+		$articleCollection = new ArticleCollection($command->title, $command->description, $articles);
 		$this->articleCollectionRepository->add($articleCollection);
 		
 		return $articleCollection->getUuid();
