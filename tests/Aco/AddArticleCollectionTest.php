@@ -70,4 +70,15 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$c = new AddArticleCollectionCommand('title', 'description', $urls);
 		$uuid = $this->cb->handle($c);
 	} 
+	
+	/**
+	 * @test
+	 * @expectedException Aco\Exception\NoArticlesException
+	 */
+	public function no_articles()
+	{
+		$urls = [];
+		$c = new AddArticleCollectionCommand('title', 'description', $urls);
+		$uuid = $this->cb->handle($c);
+	}
 }

@@ -3,6 +3,7 @@
 namespace Aco;
 
 use Rhumsaa\Uuid\Uuid;
+use Aco\Exception\NoArticlesException;
 
 class ArticleCollection
 {
@@ -17,6 +18,10 @@ class ArticleCollection
 	
 	public function __construct($title, $description, $articles)
 	{
+		if (empty($articles)) {
+			throw new NoArticlesException();
+		}
+		
 		$this->uuid = Uuid::uuid4();
 		$this->date = new \DateTime();
 		$this->title = $title;
