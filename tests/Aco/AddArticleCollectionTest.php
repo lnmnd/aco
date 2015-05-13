@@ -34,21 +34,30 @@ class FakeUrlFetcher implements UrlFetcher
 }
 
 class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
+	private $acr;
+	private $fuf;
+	private $af;
+	private $cb;
+	
+	public function setUp()
+	{
+		$this->acr = new FakeArticleCollectionRepository();
+		$this->fuf = new FakeUrlFetcher();
+		$this->af = new ArticleFactory($this->fuf);
+		$this->cb = new CommandBus();
+		$this->cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler($this->acr, $this->af));
+	}
+	
 	public function testAdd()
 	{
-		$acr = new FakeArticleCollectionRepository();
-		$fuf = new FakeUrlFetcher();
-		$af = new ArticleFactory($fuf);
-		$cb = new CommandBus();
-		$cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler($acr, $af));
 		$urls = ['http://localhost/a1', 'http://localhost/a2'];
 		$c = new AddArticleCollectionCommand('title', 'description', $urls);
-		$uuid = $cb->handle($c);
+		$uuid = $this->cb->handle($c);
 		
 		$this->assertEquals(36, strlen($uuid));
-		$this->assertEquals(true, $acr->called);
-		$this->assertEquals($uuid, $acr->articleCollection->getUuid());
-		$this->assertEquals(count($urls), count($fuf->urls));
+		$this->assertEquals(true, $this->acr->called);
+		$this->assertEquals($uuid, $this->acr->articleCollection->getUuid());
+		$this->assertEquals(count($urls), count($this->fuf->urls));
 	}
 	
 	/** 
@@ -57,13 +66,8 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function wrong_url()
 	{
-		$acr = new FakeArticleCollectionRepository();
-		$fuf = new FakeUrlFetcher();
-		$af = new ArticleFactory($fuf);
-		$cb = new CommandBus();
-		$cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler($acr, $af));
 		$urls = ['wrongurl'];
 		$c = new AddArticleCollectionCommand('title', 'description', $urls);
-		$uuid = $cb->handle($c);
+		$uuid = $this->cb->handle($c);
 	} 
 }
