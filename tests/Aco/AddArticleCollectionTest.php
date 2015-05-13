@@ -50,4 +50,20 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($uuid, $acr->articleCollection->getUuid());
 		$this->assertEquals(count($urls), count($fuf->urls));
 	}
+	
+	/** 
+	 * @test
+	 * @expectedException Aco\Exception\BadUrl
+	 */
+	public function wrong_url()
+	{
+		$acr = new FakeArticleCollectionRepository();
+		$fuf = new FakeUrlFetcher();
+		$af = new ArticleFactory($fuf);
+		$cb = new CommandBus();
+		$cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler($acr, $af));
+		$urls = ['wrongurl'];
+		$c = new AddArticleCollectionCommand('title', 'description', $urls);
+		$uuid = $cb->handle($c);
+	} 
 }
