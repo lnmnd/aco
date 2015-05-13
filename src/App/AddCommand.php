@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Aco\CommandBus;
 
 class AddCommand extends Command
 {
@@ -45,5 +46,7 @@ class AddCommand extends Command
 		foreach ($urls as $url) {
 			$output->writeln('  - '.$url);
 		}
+		
+		$output->writeln('Added with uuid '.$uuid);
 	}
 }

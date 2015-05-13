@@ -3,8 +3,10 @@
 require __DIR__.'/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
-use App\AddCommand;
+
+$inj = new Auryn\Injector();
 
 $application = new Application();
-$application->add(new AddCommand());
+$application->add($inj->make('App\AddCommand'));
 $application->run();
+
