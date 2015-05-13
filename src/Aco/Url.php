@@ -22,4 +22,9 @@ class Url
 	{
 		return $this->url;	
 	}
+	
+	public function equals(Url $url)
+	{
+		return $this->getUrl() === $url->getUrl();
+	}
 }
