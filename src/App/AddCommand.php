@@ -38,7 +38,12 @@ class AddCommand extends Command
 		$title = $input->getArgument('title');
 		$description = $input->getArgument('description');
 		$urls = $input->getArgument('urls');
-
-		$output->writeln('added');
+		
+		$output->writeln('title: '.$title);
+		$output->writeln('description: '.$description);
+		$output->writeln('urls:');
+		foreach ($urls as $url) {
+			$output->writeln('  - '.$url);
+		}
 	}
 }
