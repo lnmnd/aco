@@ -9,29 +9,8 @@ use Aco\ArticleCollection;
 use Aco\ArticleCollectionRepository;
 use Aco\UrlFetcher;
 use Aco\Url;
-
-class FakeArticleCollectionRepository implements ArticleCollectionRepository
-{
-	public $called = false;
-	public $articleCollection = null;
-	
-	public function add(ArticleCollection $articleCollection)
-	{
-		$this->called = true;
-		$this->articleCollection = $articleCollection;	
-	}
-}
-
-class FakeUrlFetcher implements UrlFetcher
-{
-	public $urls = [];
-	
-	public function fetch(Url $url)
-	{
-		$this->urls[] = $url;
-		return 'fake content';
-	}
-}
+use FakeInfra\FakeArticleCollectionRepository;
+use FakeInfra\FakeUrlFetcher;
 
 class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 	private $acr;
