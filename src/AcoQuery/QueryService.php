@@ -2,7 +2,7 @@
 
 namespace AcoQuery;
 
-interface AcoQueryService
+interface QueryService
 {
 	/**
 	 * Returns all article collections, with general info,
