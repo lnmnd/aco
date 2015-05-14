@@ -35,7 +35,7 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 		 */
 		foreach ($acos as $aco) {
 			$lacos[] = new ListAco(
-					$aco->getUuid(),
+					$aco->getUuid()->toString(),
 					$aco->getDate(),
 					$aco->getTitle(),
 					$aco->getDescription());
