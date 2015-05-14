@@ -4,6 +4,7 @@ namespace WebApp;
 
 use FastRoute\Dispatcher;
 use AcoQuery\QueryService;
+use AcoQuery\Exception\ArticleCollectionNotFoundException;
 
 class WebApp
 {
@@ -52,6 +53,11 @@ class WebApp
 	
 	public function getArticleCollection($uuid)
 	{
-		return $this->queryService->getArticleCollection($uuid);
+		try {
+			return $this->queryService->getArticleCollection($uuid);
+		} catch (ArticleCollectionNotFoundException $e) {
+			header('HTTP/1.0. 404 Not Found');
+			return;
+		}
 	}
 }
