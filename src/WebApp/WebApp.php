@@ -57,7 +57,7 @@ class WebApp
 			return $this->queryService->getArticleCollection($uuid);
 		} catch (ArticleCollectionNotFoundException $e) {
 			header('HTTP/1.0. 404 Not Found');
-			return;
+			return new \stdClass();
 		}
 	}
 }
