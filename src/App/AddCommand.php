@@ -8,9 +8,17 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Aco\CommandBus;
+use Aco\Command\AddArticleCollectionCommand;
 
 class AddCommand extends Command
 {
+	private $commandBus;
+	
+	public function setCommandBus(CommandBus $commandBus)
+	{
+		$this->commandBus = $commandBus;
+	}
+	
 	protected function configure()
 	{
 		$this
@@ -46,6 +54,10 @@ class AddCommand extends Command
 		foreach ($urls as $url) {
 			$output->writeln('  - '.$url);
 		}
+		
+		$uuid = $this->commandBus->handle(
+				new AddArticleCollectionCommand($title, $description, $urls)
+		);
 		
 		$output->writeln('Added with uuid '.$uuid);
 	}
