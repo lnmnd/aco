@@ -17,7 +17,8 @@ class WebApp
 	public function start()
 	{
 		$dispatcher = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
-			$r->addRoute('GET', '/api/article-collections/{id}', [$this, 'articleCollections']);
+			$r->addRoute('GET', '/api/article-collections', [$this, 'getArticleCollections']);
+			$r->addRoute('GET', '/api/article-collections/{uuid}', [$this, 'getArticleCollection']);
 		});
 		
 		$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -44,9 +45,15 @@ class WebApp
 		}
 	}
 	
-	public function articleCollections()
+	public function getArticleCollections()
 	{
 		$acos = $this->queryService->getArticleCollections();
 		echo json_encode($acos);
+	}
+	
+	public function getArticleCollection($uuid)
+	{
+		$aco = $this->queryService->getArticleCollection($uuid);
+		echo json_decode($aco);
 	}
 }
