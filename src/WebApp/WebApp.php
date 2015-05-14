@@ -5,13 +5,17 @@ namespace WebApp;
 use FastRoute\Dispatcher;
 use AcoQuery\QueryService;
 use AcoQuery\Exception\ArticleCollectionNotFoundException;
+use Aco\CommandBus;
+use Aco\Command\AddArticleCollectionCommand;
 
 class WebApp
 {
+	private $commandBus;
 	private $queryService;
 	
-	public function __construct(QueryService $queryService)
+	public function __construct(CommandBus $commandBus, QueryService $queryService)
 	{
+		$this->commandBus = $commandBus;
 		$this->queryService = $queryService;
 	}
 	
@@ -49,7 +53,11 @@ class WebApp
 	
 	public function postArticleCollection()
 	{
-		return 'todo';
+		$res = new \stdClass();
+		$res->uuid = $this->commandBus->handle(
+				new AddArticleCollectionCommand('title', 'description', ['http://localhost'])
+		);				
+		return $res;
 	}
 	
 	public function getArticleCollections()
