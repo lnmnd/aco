@@ -54,6 +54,6 @@ class WebApp
 	public function getArticleCollection($uuid)
 	{
 		$aco = $this->queryService->getArticleCollection($uuid);
-		echo json_decode($aco);
+		echo json_encode($aco);
 	}
 }

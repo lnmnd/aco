@@ -11,4 +11,12 @@ interface QueryService
 	 * @return ListAco[]
 	 */
 	public function getArticleCollections();
+	
+	/**
+	 * Returns an article collection
+	 * @param string $uuid
+	 * @return FullAco
+	 * @throws AcoQuery\Exception\ArticleCollectionNotFoundException
+	 */
+	public function getArticleCollection($uuid);
 }

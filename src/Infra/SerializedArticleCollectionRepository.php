@@ -6,6 +6,9 @@ use Aco\ArticleCollectionRepository;
 use Aco\ArticleCollection;
 use AcoQuery\QueryService;
 use AcoQuery\ListAco;
+use AcoQuery\Exception\ArticleCollectionNotFoundException;
+use AcoQuery\FullAco;
+use AcoQuery\AcoQuery;
 
 class SerializedArticleCollectionRepository implements ArticleCollectionRepository, QueryService
 {
@@ -44,6 +47,30 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 			return $a->date < $b->date;
 		});
 		return $lacos;
+	}
+	
+	public function getArticleCollection($uuid)
+	{
+		$acos = $this->loadAcos();
+		/**
+		 * @var $foundAco ArticleCollection 
+		 */
+		$foundAco = array_reduce($acos, function ($foundAco, ArticleCollection $aco) use ($uuid) {
+			if ($aco->getUuid()->toString() === $uuid) {
+				return $aco;
+			} else {
+				return $foundAco;
+			}
+		}, false);
+		if ($foundAco) {
+			return new FullAco(
+				$foundAco->getUuid()->toString(),
+				$foundAco->getDate(),
+				$foundAco->getTitle()
+			);
+		} else {
+			throw new ArticleCollectionNotFoundException();
+		}
 	}
 	
 	private function loadAcos()
