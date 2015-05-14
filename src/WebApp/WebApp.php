@@ -53,9 +53,16 @@ class WebApp
 	
 	public function postArticleCollection()
 	{
+		$contents = file_get_contents('php://input');
+		$input = json_decode($contents);
+		if ($this->badAcoInput($input)) {
+			header('HTTP/1.0 400 Bad Request');
+			return new \stdClass();
+		}
+		
 		$res = new \stdClass();
 		$res->uuid = $this->commandBus->handle(
-				new AddArticleCollectionCommand('title', 'description', ['http://localhost'])
+				new AddArticleCollectionCommand($input->title, $input->description, $input->urls)
 		);				
 		return $res;
 	}
@@ -73,5 +80,13 @@ class WebApp
 			header('HTTP/1.0. 404 Not Found');
 			return new \stdClass();
 		}
+	}
+	
+	private function badAcoInput($input)
+	{
+		return !isset($input->title)
+			|| !isset($input->description)
+			|| !isset($input->urls)
+		;
 	}
 }
