@@ -39,7 +39,10 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 					$aco->getDate(),
 					$aco->getTitle(),
 					$aco->getDescription());
-		}			
+		}		
+		usort($lacos, function (ListAco $a, ListAco $b) {
+			return $a->date < $b->date;
+		});
 		return $lacos;
 	}
 	
