@@ -7,6 +7,7 @@ use AcoQuery\QueryService;
 use AcoQuery\Exception\ArticleCollectionNotFoundException;
 use Aco\CommandBus;
 use Aco\Command\AddArticleCollectionCommand;
+use Aco\Exception\BadUrl;
 
 class WebApp
 {
@@ -53,18 +54,23 @@ class WebApp
 	
 	public function postArticleCollection()
 	{
-		$contents = file_get_contents('php://input');
-		$input = json_decode($contents);
-		if ($this->badAcoInput($input)) {
+		try {
+			$contents = file_get_contents('php://input');
+			$input = json_decode($contents);
+			if ($this->badAcoInput($input)) {
+				header('HTTP/1.0 400 Bad Request');
+				return new \stdClass();
+			}
+		
+			$res = new \stdClass();
+			$res->uuid = $this->commandBus->handle(
+					new AddArticleCollectionCommand($input->title, $input->description, $input->urls)
+			);				
+			return $res;
+		} catch (BadUrl $e) {
 			header('HTTP/1.0 400 Bad Request');
 			return new \stdClass();
 		}
-		
-		$res = new \stdClass();
-		$res->uuid = $this->commandBus->handle(
-				new AddArticleCollectionCommand($input->title, $input->description, $input->urls)
-		);				
-		return $res;
 	}
 	
 	public function getArticleCollections()
