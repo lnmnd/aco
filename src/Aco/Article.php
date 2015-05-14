@@ -12,4 +12,14 @@ class Article
 		$this->url = $url;
 		$this->originalContent = $urlFetcher->fetch($url);
 	}
+	
+	public function getUrl()
+	{
+		return $this->url;
+	}
+	
+	public function getOriginalContent()
+	{
+		return $this->originalContent;
+	}
 }

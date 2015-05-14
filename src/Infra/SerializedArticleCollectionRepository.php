@@ -4,11 +4,13 @@ namespace Infra;
 
 use Aco\ArticleCollectionRepository;
 use Aco\ArticleCollection;
+use Aco\Article;
 use AcoQuery\QueryService;
 use AcoQuery\ListAco;
 use AcoQuery\Exception\ArticleCollectionNotFoundException;
 use AcoQuery\FullAco;
 use AcoQuery\AcoQuery;
+use AcoQuery\FullArticle;
 
 class SerializedArticleCollectionRepository implements ArticleCollectionRepository, QueryService
 {
@@ -63,11 +65,15 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 			}
 		}, false);
 		if ($foundAco) {
+			$articles = array_map(function (Article $x) {
+				return new FullArticle($x->getUrl()->getUrl(), $x->getOriginalContent());
+			}, $foundAco->getArticles());
 			return new FullAco(
 				$foundAco->getUuid()->toString(),
 				$foundAco->getDate(),
 				$foundAco->getTitle(),
-				$foundAco->getDescription()
+				$foundAco->getDescription(),
+				$articles
 			);
 		} else {
 			throw new ArticleCollectionNotFoundException();

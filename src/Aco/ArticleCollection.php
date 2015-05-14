@@ -57,6 +57,11 @@ class ArticleCollection
 		return $this->description;
 	}
 	
+	public function getArticles()
+	{
+		return $this->articles;
+	}
+	
 	public function equals(ArticleCollection $x)
 	{
 		return $this->uuid === $x->getUuid();
