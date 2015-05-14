@@ -18,6 +18,7 @@ class WebApp
 	public function start()
 	{
 		$dispatcher = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
+			$r->addRoute('POST', '/api/article-collections', [$this, 'postArticleCollection']);
 			$r->addRoute('GET', '/api/article-collections', [$this, 'getArticleCollections']);
 			$r->addRoute('GET', '/api/article-collections/{uuid}', [$this, 'getArticleCollection']);
 		});
@@ -44,6 +45,11 @@ class WebApp
 				echo json_encode(call_user_func_array($handler, $vars));
 				break;
 		}
+	}
+	
+	public function postArticleCollection()
+	{
+		return 'todo';
 	}
 	
 	public function getArticleCollections()
