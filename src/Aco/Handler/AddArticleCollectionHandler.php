@@ -40,6 +40,6 @@ class AddArticleCollectionHandler implements Handler
 		$articleCollection = new ArticleCollection($command->title, $command->description, $articles);
 		$this->articleCollectionRepository->add($articleCollection);
 		
-		return $articleCollection->getUuid();
+		return $articleCollection->getUuid()->toString();
 	}
 }
