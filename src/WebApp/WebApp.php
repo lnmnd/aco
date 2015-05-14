@@ -8,6 +8,7 @@ use AcoQuery\Exception\ArticleCollectionNotFoundException;
 use Aco\CommandBus;
 use Aco\Command\AddArticleCollectionCommand;
 use Aco\Exception\BadUrl;
+use Aco\Exception\NoArticlesException;
 
 class WebApp
 {
@@ -67,6 +68,9 @@ class WebApp
 					new AddArticleCollectionCommand($input->title, $input->description, $input->urls)
 			);				
 			return $res;
+		} catch (NoArticlesException $e) {
+			header('HTTP/1.0 400 Bad Request');
+			return new \stdClass();
 		} catch (BadUrl $e) {
 			header('HTTP/1.0 400 Bad Request');
 			return new \stdClass();
