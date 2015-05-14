@@ -48,13 +48,6 @@ class AddCommand extends Command
 		$description = $input->getArgument('description');
 		$urls = $input->getArgument('urls');
 		
-		$output->writeln('title: '.$title);
-		$output->writeln('description: '.$description);
-		$output->writeln('urls:');
-		foreach ($urls as $url) {
-			$output->writeln('  - '.$url);
-		}
-		
 		$uuid = $this->commandBus->handle(
 				new AddArticleCollectionCommand($title, $description, $urls)
 		);
