@@ -40,20 +40,18 @@ class WebApp
 				$vars = $routeInfo[2];
 				header("Access-Control-Allow-Origin: *");
 				header('Content-Type: application/json');
-				call_user_func_array($handler, $vars);
+				echo json_encode(call_user_func_array($handler, $vars));
 				break;
 		}
 	}
 	
 	public function getArticleCollections()
 	{
-		$acos = $this->queryService->getArticleCollections();
-		echo json_encode($acos);
+		return $this->queryService->getArticleCollections();
 	}
 	
 	public function getArticleCollection($uuid)
 	{
-		$aco = $this->queryService->getArticleCollection($uuid);
-		echo json_encode($aco);
+		return $this->queryService->getArticleCollection($uuid);
 	}
 }
