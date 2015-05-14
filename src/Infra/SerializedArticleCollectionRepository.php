@@ -66,7 +66,8 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 			return new FullAco(
 				$foundAco->getUuid()->toString(),
 				$foundAco->getDate(),
-				$foundAco->getTitle()
+				$foundAco->getTitle(),
+				$foundAco->getDescription()
 			);
 		} else {
 			throw new ArticleCollectionNotFoundException();
