@@ -10,7 +10,7 @@ $inj->alias('AcoQuery\QueryService', 'Infra\SerializedArticleCollectionRepositor
 $inj->define('Infra\SerializedArticleCollectionRepository', [
 		':file' => __DIR__.'/var/repository.php',
 ]);
-$inj->alias('Aco\UrlFetcher', 'FakeInfra\FakeUrlFetcher');
+$inj->alias('Aco\UrlFetcher', 'Infra\GuzzleUrlFetcher');
 $inj->define('Aco\CommandBus', [
 		':handlers' => [['Aco\Command\AddArticleCollectionCommand', $inj->make('Aco\Handler\AddArticleCollectionHandler')]],
 ]);
