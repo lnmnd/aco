@@ -70,10 +70,10 @@ class WebApp
 			return $res;
 		} catch (NoArticlesException $e) {
 			header('HTTP/1.0 400 Bad Request');
-			return new \stdClass();
+			return ['error' => 'No articles'];
 		} catch (BadUrlException $e) {
 			header('HTTP/1.0 400 Bad Request');
-			return new \stdClass();
+			return ['error' => 'Bad url'];
 		}
 	}
 	
