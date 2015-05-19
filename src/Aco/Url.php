@@ -2,7 +2,7 @@
 
 namespace Aco;
 
-use Aco\Exception\BadUrl;
+use Aco\Exception\BadUrlException;
 
 
 class Url
@@ -14,7 +14,7 @@ class Url
 		if (filter_var($url, FILTER_VALIDATE_URL)) {
 			$this->url = $url;
 		} else {
-			throw new BadUrl();
+			throw new BadUrlException();
 		}
 	}
 	

@@ -41,7 +41,7 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 	
 	/** 
 	 * @test
-	 * @expectedException Aco\Exception\BadUrl
+	 * @expectedException Aco\Exception\BadUrlException
 	 */
 	public function wrong_url()
 	{

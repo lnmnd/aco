@@ -7,7 +7,7 @@ use AcoQuery\QueryService;
 use AcoQuery\Exception\ArticleCollectionNotFoundException;
 use Aco\CommandBus;
 use Aco\Command\AddArticleCollectionCommand;
-use Aco\Exception\BadUrl;
+use Aco\Exception\BadUrlException;
 use Aco\Exception\NoArticlesException;
 
 class WebApp
@@ -71,7 +71,7 @@ class WebApp
 		} catch (NoArticlesException $e) {
 			header('HTTP/1.0 400 Bad Request');
 			return new \stdClass();
-		} catch (BadUrl $e) {
+		} catch (BadUrlException $e) {
 			header('HTTP/1.0 400 Bad Request');
 			return new \stdClass();
 		}
