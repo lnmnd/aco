@@ -9,6 +9,7 @@ use Aco\CommandBus;
 use Aco\Command\AddArticleCollectionCommand;
 use Aco\Exception\BadUrlException;
 use Aco\Exception\NoArticlesException;
+use Aco\Exception\CannotFetchUrlException;
 
 class WebApp
 {
@@ -74,6 +75,9 @@ class WebApp
 		} catch (BadUrlException $e) {
 			header('HTTP/1.0 400 Bad Request');
 			return ['error' => 'Bad url'];
+		} catch (CannotFetchUrlException $e) {
+			header('HTTP/1.0 500  Internal Server Error');
+			return ['error' => 'Cannot fetch url'];
 		}
 	}
 	
