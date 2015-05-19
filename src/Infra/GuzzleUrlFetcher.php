@@ -12,6 +12,7 @@ class GuzzleUrlFetcher implements UrlFetcher
 	{
 		$client = new Client();
 		$response = $client->get($url->getUrl());
-		return $response->getBody();
+		$body = (string)$response->getBody();
+		return $body;
 	}
 } 
