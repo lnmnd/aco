@@ -30,13 +30,18 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 	public function testAdd()
 	{
 		$urls = ['http://localhost/a1', 'http://localhost/a2'];
+		$furls = ['http://localhost/a1' => 'a1', 'http://localhost/a2' => 'a2'];
+		$this->fuf->urls = $furls;
 		$c = new AddArticleCollectionCommand('title', 'description', $urls);
 		$uuid = $this->cb->handle($c);
 		
 		$this->assertEquals(36, strlen($uuid));
+		$this->assertEquals(count($urls), count($this->fuf->callUrls));
 		$this->assertEquals(true, $this->acr->called);
 		$this->assertEquals($uuid, $this->acr->articleCollection->getUuid());
-		$this->assertEquals(count($urls), count($this->fuf->urls));
+		$articles = $this->acr->articleCollection->getArticles();
+		$this->assertEquals(2, count($articles));
+		$this->assertEquals('a1', $articles[0]->getOriginalContent());
 	}
 	
 	/** 
