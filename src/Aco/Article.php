@@ -6,6 +6,7 @@ use Symfony\Component\DomCrawler\Crawler;
 use DOMDocument;
 use DOMElement;
 use Symfony\Component\DomCrawler\Symfony\Component\DomCrawler;
+use Aco\Exception\CannotExtractContentException;
 
 class Article
 {
@@ -49,10 +50,9 @@ class Article
     	}
 
     	if ($biggest_num == 0) {
-    		echo "todo no content";
-            return false;
+    		throw new CannotExtractContentException();
     	}
-		
+
 		return $this->innerHtml($biggest_tag);
 	}
 	
