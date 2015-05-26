@@ -78,6 +78,9 @@ class WebApp
 		} catch (CannotFetchUrlException $e) {
 			header('HTTP/1.0 500  Internal Server Error');
 			return ['error' => 'Cannot fetch url'];
+		} catch (CannotExtractContentException $e) {
+			header('HTTP/1.0 500  Internal Server Error');
+			return ['error' => 'Cannot extract content'];
 		}
 	}
 	

@@ -44,6 +44,51 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('a1', $articles[0]->getOriginalContent());
 	}
 	
+	/**
+	 * @test
+	 */
+	public function extract_content()
+	{
+		$urls = ['http://localhost/a1'];
+		$furls = ['http://localhost/a1' => '<div><p>no</p></div><div><p>content here</p><p>yes</p></div><div><p>no!</p></div>'];
+		$this->fuf->urls = $furls;
+		$c = new AddArticleCollectionCommand('title', 'description', $urls);
+		$uuid = $this->cb->handle($c);
+
+		$articles = $this->acr->articleCollection->getArticles();
+		$this->assertEquals('<p>content here</p><p>yes</p>', $articles[0]->getContent());
+	} 
+	
+	/**
+	 * @test
+	 */
+	public function remove_styles()
+	{
+		$urls = ['http://localhost/a1'];
+		$furls = ['http://localhost/a1' => '<div><p class="foo" style="border: 1px solid red;">content</p></div>'];
+		$this->fuf->urls = $furls;
+		
+		$c = new AddArticleCollectionCommand('title', 'description', $urls);
+		$uuid = $this->cb->handle($c);
+	
+		$articles = $this->acr->articleCollection->getArticles();
+		$this->assertEquals('<p>content</p>', $articles[0]->getContent());
+	}
+	
+	/**
+	 * @test
+	 * @expectedException Aco\Exception\CannotExtractContentException
+	 */
+	public function no_content_to_extract()
+	{
+		$urls = ['http://localhost/a1'];
+		$furls = ['http://localhost/a1' => ''];
+		$this->fuf->urls = $furls;
+		
+		$c = new AddArticleCollectionCommand('title', 'description', $urls);
+		$uuid = $this->cb->handle($c);
+	}
+	
 	/** 
 	 * @test
 	 * @expectedException Aco\Exception\BadUrlException
