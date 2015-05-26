@@ -3,31 +3,22 @@
 namespace WebApp;
 
 use FastRoute\Dispatcher;
-use AcoQuery\QueryService;
-use AcoQuery\Exception\ArticleCollectionNotFoundException;
-use Aco\CommandBus;
-use Aco\Command\AddArticleCollectionCommand;
-use Aco\Exception\BadUrlException;
-use Aco\Exception\NoArticlesException;
-use Aco\Exception\CannotFetchUrlException;
 
 class WebApp
 {
-	private $commandBus;
-	private $queryService;
+	private $apiController;
 	
-	public function __construct(CommandBus $commandBus, QueryService $queryService)
+	public function __construct(ApiController $apiController)
 	{
-		$this->commandBus = $commandBus;
-		$this->queryService = $queryService;
+		$this->apiController = $apiController;
 	}
 	
 	public function start()
 	{
 		$dispatcher = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
-			$r->addRoute('POST', '/api/article-collections', [$this, 'postArticleCollection']);
-			$r->addRoute('GET', '/api/article-collections', [$this, 'getArticleCollections']);
-			$r->addRoute('GET', '/api/article-collections/{uuid}', [$this, 'getArticleCollection']);
+			$r->addRoute('POST', '/api/article-collections', [$this->apiController, 'postArticleCollection']);
+			$r->addRoute('GET', '/api/article-collections', [$this->apiController, 'getArticleCollections']);
+			$r->addRoute('GET', '/api/article-collections/{uuid}', [$this->apiController, 'getArticleCollection']);
 		});
 		
 		$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -52,58 +43,5 @@ class WebApp
 				echo json_encode(call_user_func_array($handler, $vars));
 				break;
 		}
-	}
-	
-	public function postArticleCollection()
-	{
-		try {
-			$contents = file_get_contents('php://input');
-			$input = json_decode($contents);
-			if ($this->badAcoInput($input)) {
-				header('HTTP/1.0 400 Bad Request');
-				return new \stdClass();
-			}
-		
-			$res = new \stdClass();
-			$res->uuid = $this->commandBus->handle(
-					new AddArticleCollectionCommand($input->title, $input->description, $input->urls)
-			);				
-			return $res;
-		} catch (NoArticlesException $e) {
-			header('HTTP/1.0 400 Bad Request');
-			return ['error' => 'No articles'];
-		} catch (BadUrlException $e) {
-			header('HTTP/1.0 400 Bad Request');
-			return ['error' => 'Bad url'];
-		} catch (CannotFetchUrlException $e) {
-			header('HTTP/1.0 500  Internal Server Error');
-			return ['error' => 'Cannot fetch url'];
-		} catch (CannotExtractContentException $e) {
-			header('HTTP/1.0 500  Internal Server Error');
-			return ['error' => 'Cannot extract content'];
-		}
-	}
-	
-	public function getArticleCollections()
-	{
-		return $this->queryService->getArticleCollections();
-	}
-	
-	public function getArticleCollection($uuid)
-	{
-		try {
-			return $this->queryService->getArticleCollection($uuid);
-		} catch (ArticleCollectionNotFoundException $e) {
-			header('HTTP/1.0. 404 Not Found');
-			return new \stdClass();
-		}
-	}
-	
-	private function badAcoInput($input)
-	{
-		return !isset($input->title)
-			|| !isset($input->description)
-			|| !isset($input->urls)
-		;
 	}
 }
