@@ -53,7 +53,8 @@ class Article
     		throw new CannotExtractContentException();
     	}
 
-		return $this->innerHtml($biggest_tag);
+		return $this->innerHtml(
+				$this->removeStyles($biggest_tag));
 	}
 	
 	private function getAllElements($content)
@@ -71,6 +72,30 @@ class Article
 			}
 		}
 		return $n;
+	}
+	
+	private function removeStyles(DOMElement $el)
+	{
+		if ($el->nodeName !== 'img') {
+			$attrs = [];
+			$as = $el->attributes;
+			foreach ($as as $x) {
+				$attrs[] = $x->name;
+			}
+			foreach ($attrs as $x) {
+				$el->removeAttribute($x);
+			}
+		}
+	
+		if ($el->hasChildNodes()) {
+			foreach ($el->childNodes as $c) {
+				if (get_class($c) == 'DOMElement') {
+					$this->removeStyles($c);
+				}
+			}
+		}
+	
+		return $el;
 	}
 	
 	private function innerHtml(\DOMElement $element)

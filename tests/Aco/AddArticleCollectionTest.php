@@ -61,6 +61,22 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
 	 * @test
+	 */
+	public function remove_styles()
+	{
+		$urls = ['http://localhost/a1'];
+		$furls = ['http://localhost/a1' => '<div><p class="foo" style="border: 1px solid red;">content</p></div>'];
+		$this->fuf->urls = $furls;
+		
+		$c = new AddArticleCollectionCommand('title', 'description', $urls);
+		$uuid = $this->cb->handle($c);
+	
+		$articles = $this->acr->articleCollection->getArticles();
+		$this->assertEquals('<p>content</p>', $articles[0]->getContent());
+	}
+	
+	/**
+	 * @test
 	 * @expectedException Aco\Exception\CannotExtractContentException
 	 */
 	public function no_content_to_extract()
