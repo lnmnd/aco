@@ -25,7 +25,7 @@ class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$this->fuf = new FakeUrlFetcher();
 		$this->af = new ArticleFactory($this->fuf);
 		$this->cb = new CommandBus();
-		$this->cb->register('Aco\Command\RemoveArticleCollectionCommand', new RemoveArticleCollectionHandler($this->acr, $this->af));
+		$this->cb->register('Aco\Command\RemoveArticleCollectionCommand', new RemoveArticleCollectionHandler($this->acr));
 	}
 
 	/**
@@ -39,7 +39,7 @@ class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$uuid = $articleCollection->getUuid();
 		$this->acr->articleCollections[] = $articleCollection;
 		
-		$c = new RemoveArticleCollectionCommand('uuid');
+		$c = new RemoveArticleCollectionCommand($uuid);
 		$this->cb->handle($c);
 		
 		$this->assertEmpty($this->acr->articleCollections);
