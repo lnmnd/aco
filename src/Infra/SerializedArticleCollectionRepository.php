@@ -11,6 +11,7 @@ use AcoQuery\Exception\ArticleCollectionNotFoundException;
 use AcoQuery\FullAco;
 use AcoQuery\AcoQuery;
 use AcoQuery\FullArticle;
+use Rhumsaa\Uuid\Uuid;
 
 class SerializedArticleCollectionRepository implements ArticleCollectionRepository, QueryService
 {
@@ -29,6 +30,16 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 		$acos = $this->loadAcos();
 		$acos[] = $articleCollection;
 		$this->saveAcos($acos);
+	}
+	
+	public function get(Uuid $uuid)
+	{
+		//@TODO
+	}
+	
+	public function remove(ArticleCollection $articleCollection)
+	{
+		//@TODO
 	}
 
 	public function getArticleCollections()
