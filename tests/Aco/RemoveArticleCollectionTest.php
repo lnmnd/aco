@@ -36,6 +36,7 @@ class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$furls = ['http://url1' => 'content'];
 		$this->fuf->urls = $furls;
 		$articleCollection = new ArticleCollection('tit', 'des', [$this->af->make(new Url('http://url1'))]);
+		$uuid = $articleCollection->getUuid();
 		$this->acr->articleCollections[] = $articleCollection;
 		
 		$c = new RemoveArticleCollectionCommand('uuid');

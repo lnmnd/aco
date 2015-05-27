@@ -2,6 +2,7 @@
 
 namespace Aco;
 
+use Rhumsaa\Uuid\Uuid;
 interface ArticleCollectionRepository
 {
 	/**
@@ -9,4 +10,10 @@ interface ArticleCollectionRepository
 	 * @return void
 	 */
 	public function add (ArticleCollection $articleCollection);	
+	
+	/**
+	 * @param Uuid $uuid
+	 * @return ArticleCollection
+	 */
+	public function get(Uuid $uuid);
 }
