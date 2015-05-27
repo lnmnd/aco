@@ -26,6 +26,8 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 		$this->file = $file;
 	}
 	
+	// ArticleCollectionRepository
+	
 	public function add(ArticleCollection $articleCollection)
 	{
 		$acos = $this->loadAcos();
@@ -58,6 +60,8 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 		$this->saveAcos($acos);
 	}
 
+	// QueryService
+	
 	public function getArticleCollections()
 	{
 		$acos = $this->loadAcos();
