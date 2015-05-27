@@ -5,6 +5,7 @@ namespace Infra;
 use Aco\ArticleCollectionRepository;
 use Aco\ArticleCollection;
 use Aco\Article;
+use Aco\Exception\DoesNotExistException;
 use AcoQuery\QueryService;
 use AcoQuery\ListAco;
 use AcoQuery\Exception\ArticleCollectionNotFoundException;
@@ -34,12 +35,27 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 	
 	public function get(Uuid $uuid)
 	{
-		//@TODO
+		$acos = $this->loadAcos();
+		foreach ($acos as $aco) {
+			if ($aco->getUuid()->equals($uuid)) {
+				return $aco;
+			}
+		}
+		throw new DoesNotExistException();
 	}
 	
 	public function remove(ArticleCollection $articleCollection)
 	{
-		//@TODO
+		$acos = $this->loadAcos();
+		$i = 0;
+		foreach ($acos as $aco) {
+			if ($aco->getUuid()->equals($articleCollection->getUuid())) {
+				unset($acos[$i]);
+				$acos = array_values($acos);
+			}
+			$i++;
+		}
+		$this->saveAcos($acos);
 	}
 
 	public function getArticleCollections()
