@@ -9,6 +9,7 @@ use Aco\Command\AddArticleCollectionCommand;
 use Aco\Exception\BadUrlException;
 use Aco\Exception\NoArticlesException;
 use Aco\Exception\CannotFetchUrlException;
+use Aco\Exception\CannotExtractContentException;
 
 class ApiController
 {
