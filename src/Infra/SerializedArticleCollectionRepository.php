@@ -5,12 +5,14 @@ namespace Infra;
 use Aco\ArticleCollectionRepository;
 use Aco\ArticleCollection;
 use Aco\Article;
+use Aco\Exception\DoesNotExistException;
 use AcoQuery\QueryService;
 use AcoQuery\ListAco;
 use AcoQuery\Exception\ArticleCollectionNotFoundException;
 use AcoQuery\FullAco;
 use AcoQuery\AcoQuery;
 use AcoQuery\FullArticle;
+use Rhumsaa\Uuid\Uuid;
 
 class SerializedArticleCollectionRepository implements ArticleCollectionRepository, QueryService
 {
@@ -24,13 +26,42 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 		$this->file = $file;
 	}
 	
+	// ArticleCollectionRepository
+	
 	public function add(ArticleCollection $articleCollection)
 	{
 		$acos = $this->loadAcos();
 		$acos[] = $articleCollection;
 		$this->saveAcos($acos);
 	}
+	
+	public function get(Uuid $uuid)
+	{
+		$acos = $this->loadAcos();
+		foreach ($acos as $aco) {
+			if ($aco->getUuid()->equals($uuid)) {
+				return $aco;
+			}
+		}
+		throw new DoesNotExistException();
+	}
+	
+	public function remove(ArticleCollection $articleCollection)
+	{
+		$acos = $this->loadAcos();
+		$i = 0;
+		foreach ($acos as $aco) {
+			if ($aco->getUuid()->equals($articleCollection->getUuid())) {
+				unset($acos[$i]);
+				$acos = array_values($acos);
+			}
+			$i++;
+		}
+		$this->saveAcos($acos);
+	}
 
+	// QueryService
+	
 	public function getArticleCollections()
 	{
 		$acos = $this->loadAcos();
