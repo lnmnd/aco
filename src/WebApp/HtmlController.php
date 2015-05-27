@@ -21,18 +21,23 @@ class HtmlController
 
 	public function addArticleCollection()
 	{
+		$error = false;
 		if (isset($_POST['title'])) {
 			$title = $_POST['title'];
 			$description = $_POST['description'];
 			$urls = explode(',', $_POST['urls']);
 			
-			$uuid = $this->commandBus->handle(
-					new AddArticleCollectionCommand($title, $description, $urls)
-			);
-			header('Location: /article-collections/' . $uuid);
-			return;
+			try {
+				$uuid = $this->commandBus->handle(
+						new AddArticleCollectionCommand($title, $description, $urls)
+				);
+				header('Location: /article-collections/' . $uuid);
+				return;
+			} catch (\Exception $e) {
+				$error = true;
+			}
 		}
-		$this->render('add.html', []);
+		$this->render('add.html', ['error' => $error]);
 	}
 	
 	public function getArticleCollections()
