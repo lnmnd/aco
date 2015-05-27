@@ -28,11 +28,11 @@ class FakeArticleCollectionRepository implements ArticleCollectionRepository
 		throw new DoesNotExistException();
 	}
 	
-	public function remove(Uuid $uuid)
+	public function remove(ArticleCollection $articleCollection)
 	{
 		$i = 0;
 		foreach ($this->articleCollections as $aco) {
-			if ($aco->getUuid()->equals($uuid)) {
+			if ($aco->getUuid()->equals($articleCollection->getUuid())) {
 				unset($this->articleCollections[$i]);
 				$this->articleCollections = array_values($this->articleCollections);
 			}

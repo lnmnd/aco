@@ -29,6 +29,6 @@ class RemoveArticleCollectionHandler implements Handler
 	{
 		$uuid = Uuid::fromString($command->uuid);
 		$articleCollection = $this->articleCollectionRepository->get($uuid);
-		$this->articleCollectionRepository->remove($uuid);
+		$this->articleCollectionRepository->remove($articleCollection);
 	}
 }

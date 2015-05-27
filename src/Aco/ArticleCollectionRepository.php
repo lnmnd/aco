@@ -21,8 +21,8 @@ interface ArticleCollectionRepository
 	public function get(Uuid $uuid);
 	
 	/**
-	 * @param Uuid $uuid
+	 * @param ArticleCollection $articleCollection
 	 * @return void
 	 */
-	public function remove(Uuid $uuid);
+	public function remove(ArticleCollection $articleCollection);
 }
