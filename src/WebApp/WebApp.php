@@ -38,7 +38,6 @@ class WebApp
 				echo '404: Not Found';
 				break;
 			case Dispatcher::METHOD_NOT_ALLOWED:
-				$allowedMethods = $routeInfo[1];
 				header('HTTP/1.0 405 Method not allowed');
 				echo '405: Method not allowed';
 				break;
