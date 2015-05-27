@@ -12,10 +12,14 @@ $inj->define('Infra\SerializedArticleCollectionRepository', [
 ]);
 $inj->alias('Aco\UrlFetcher', 'Infra\GuzzleUrlFetcher');
 $inj->define('Aco\CommandBus', [
-		':handlers' => [['Aco\Command\AddArticleCollectionCommand', $inj->make('Aco\Handler\AddArticleCollectionHandler')]],
+		':handlers' => [['Aco\Command\AddArticleCollectionCommand', $inj->make('Aco\Handler\AddArticleCollectionHandler')],
+						['Aco\Command\RemoveArticleCollectionCommand', $inj->make('Aco\Handler\RemoveArticleCollectionHandler')]],
 ]);
 $inj->prepare('App\AddCommand', function ($addCommand, $inj) {
 	$addCommand->setCommandBus($inj->make('Aco\CommandBus'));
+});
+$inj->prepare('App\RemoveCommand', function ($removeCommand, $inj) {
+	$removeCommand->setCommandBus($inj->make('Aco\CommandBus'));
 });
 $inj->prepare('App\ListCommand', function ($listCommand, $inj) {
 	$listCommand->setQueryService($inj->make('AcoQuery\QueryService'));
@@ -23,6 +27,7 @@ $inj->prepare('App\ListCommand', function ($listCommand, $inj) {
 
 $application = new Application();
 $application->add($inj->make('App\AddCommand'));
+$application->add($inj->make('App\RemoveCommand'));
 $application->add($inj->make('App\ListCommand'));
 $application->run();
 
