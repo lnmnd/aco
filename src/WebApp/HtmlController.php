@@ -18,6 +18,11 @@ class HtmlController
 		$this->queryService = $queryService;
 	}
 
+	public function addArticleCollection()
+	{
+		$this->render('add.html', []);
+	}
+	
 	public function getArticleCollections()
 	{
 		$this->render('index.html',
