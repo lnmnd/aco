@@ -8,11 +8,11 @@ use Aco\ArticleCollection;
 class FakeArticleCollectionRepository implements ArticleCollectionRepository
 {
 	public $called = false;
-	public $articleCollection = null;
+	public $articleCollections = [];
 
 	public function add(ArticleCollection $articleCollection)
 	{
 		$this->called = true;
-		$this->articleCollection = $articleCollection;
+		$this->articleCollections[] = $articleCollection;
 	}
 }

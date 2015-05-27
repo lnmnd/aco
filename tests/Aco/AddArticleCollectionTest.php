@@ -38,8 +38,10 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(36, strlen($uuid));
 		$this->assertEquals(count($urls), count($this->fuf->callUrls));
 		$this->assertEquals(true, $this->acr->called);
-		$this->assertEquals($uuid, $this->acr->articleCollection->getUuid());
-		$articles = $this->acr->articleCollection->getArticles();
+		$this->assertEquals($uuid, $this->acr->articleCollections[0]->getUuid());
+		$acos = $this->acr->articleCollections;
+		$this->assertEquals(1, count($acos));
+		$articles = $acos[0]->getArticles();
 		$this->assertEquals(2, count($articles));
 		$this->assertEquals('a1', $articles[0]->getOriginalContent());
 	}
@@ -55,7 +57,7 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$c = new AddArticleCollectionCommand('title', 'description', $urls);
 		$uuid = $this->cb->handle($c);
 
-		$articles = $this->acr->articleCollection->getArticles();
+		$articles = $this->acr->articleCollections[0]->getArticles();
 		$this->assertEquals('<p>content here</p><p>yes</p>', $articles[0]->getContent());
 	} 
 	
@@ -71,7 +73,7 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$c = new AddArticleCollectionCommand('title', 'description', $urls);
 		$uuid = $this->cb->handle($c);
 	
-		$articles = $this->acr->articleCollection->getArticles();
+		$articles = $this->acr->articleCollections[0]->getArticles();
 		$this->assertEquals('<p>content</p>', $articles[0]->getContent());
 	}
 	
