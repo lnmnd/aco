@@ -2,11 +2,16 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
+if (file_exists(__DIR__.'/../.env')) {
+	Dotenv::load(__DIR__.'/..');
+}
+Dotenv::required('REPOSITORY_PATH');
+
 $inj = new Auryn\Injector();
 $inj->alias('Aco\ArticleCollectionRepository', 'Infra\SerializedArticleCollectionRepository');
 $inj->alias('AcoQuery\QueryService', 'Infra\SerializedArticleCollectionRepository');
 $inj->define('Infra\SerializedArticleCollectionRepository', [
-		':file' => __DIR__.'/../var/repository.php',
+		':file' => getenv('REPOSITORY_PATH'),
 ]);
 $inj->alias('Aco\UrlFetcher', 'Infra\GuzzleUrlFetcher');
 $inj->define('Aco\CommandBus', [
