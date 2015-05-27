@@ -24,6 +24,16 @@ class HtmlController
 				['acos' => $this->queryService->getArticleCollections()]);
 	}
 	
+	public function getArticleCollection($uuid)
+	{
+		try {
+			$this->render('aco.html', ['aco' => $this->queryService->getArticleCollection($uuid)]);
+		} catch (ArticleCollectionNotFoundException $e) {
+			header('HTTP/1.0. 404 Not Found');
+			return $this->respond(new \stdClass());
+		}
+	}
+	
 	private function render($template, $data)
 	{
 		echo $this->mustache->render($template, $data);		
