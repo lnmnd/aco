@@ -5,6 +5,7 @@ namespace WebApp;
 use AcoQuery\QueryService;
 use Aco\CommandBus;
 use Aco\Command\AddArticleCollectionCommand;
+use AcoQuery\Exception\ArticleCollectionNotFoundException;
 
 class HtmlController
 {
@@ -52,7 +53,7 @@ class HtmlController
 			$this->render('aco.html', ['aco' => $this->queryService->getArticleCollection($uuid)]);
 		} catch (ArticleCollectionNotFoundException $e) {
 			header('HTTP/1.0. 404 Not Found');
-			return $this->respond(new \stdClass());
+			return $this->render('404.html', new \stdClass());
 		}
 	}
 	
