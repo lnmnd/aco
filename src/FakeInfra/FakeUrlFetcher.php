@@ -10,7 +10,7 @@ use Aco\Exception\Aco\Exception;
 class FakeUrlFetcher implements UrlFetcher
 {
 	public $urls = [];
-	public $callurls = [];
+	public $callUrls = [];
 	
 	public function fetch(Url $url)
 	{
