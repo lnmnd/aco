@@ -28,41 +28,41 @@ class ApiController
 			$input = json_decode($contents);
 			if ($this->badAcoInput($input)) {
 				header('HTTP/1.0 400 Bad Request');
-				return new \stdClass();
+				return $this->respond(new \stdClass());
 			}
 	
 			$res = new \stdClass();
 			$res->uuid = $this->commandBus->handle(
 					new AddArticleCollectionCommand($input->title, $input->description, $input->urls)
 			);
-			return $res;
+			return $this->respond($res);
 		} catch (NoArticlesException $e) {
 			header('HTTP/1.0 400 Bad Request');
-			return ['error' => 'No articles'];
+			return $this->respond(['error' => 'No articles']);
 		} catch (BadUrlException $e) {
 			header('HTTP/1.0 400 Bad Request');
-			return ['error' => 'Bad url'];
+			return $this->respond(['error' => 'Bad url']);
 		} catch (CannotFetchUrlException $e) {
 			header('HTTP/1.0 500  Internal Server Error');
-			return ['error' => 'Cannot fetch url'];
+			return $this->respond(['error' => 'Cannot fetch url']);
 		} catch (CannotExtractContentException $e) {
 			header('HTTP/1.0 500  Internal Server Error');
-			return ['error' => 'Cannot extract content'];
+			return $this->respond(['error' => 'Cannot extract content']);
 		}
 	}
 	
 	public function getArticleCollections()
 	{
-		return $this->queryService->getArticleCollections();
+		return $this->respond($this->queryService->getArticleCollections());
 	}
 	
 	public function getArticleCollection($uuid)
 	{
 		try {
-			return $this->queryService->getArticleCollection($uuid);
+			return $this->respond($this->queryService->getArticleCollection($uuid));
 		} catch (ArticleCollectionNotFoundException $e) {
 			header('HTTP/1.0. 404 Not Found');
-			return new \stdClass();
+			return $this->respond(new \stdClass());
 		}
 	}
 	
@@ -72,5 +72,12 @@ class ApiController
 		|| !isset($input->description)
 		|| !isset($input->urls)
 		;
+	}
+	
+	private function respond($data)
+	{
+		header("Access-Control-Allow-Origin: *");
+		header('Content-Type: application/json');
+		echo json_encode($data);
 	}
 }

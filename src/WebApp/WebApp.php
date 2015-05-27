@@ -38,9 +38,7 @@ class WebApp
 			case Dispatcher::FOUND:
 				$handler = $routeInfo[1];
 				$vars = $routeInfo[2];
-				header("Access-Control-Allow-Origin: *");
-				header('Content-Type: application/json');
-				echo json_encode(call_user_func_array($handler, $vars));
+				call_user_func_array($handler, $vars);
 				break;
 		}
 	}
