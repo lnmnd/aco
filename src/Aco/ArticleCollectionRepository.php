@@ -16,4 +16,10 @@ interface ArticleCollectionRepository
 	 * @return ArticleCollection
 	 */
 	public function get(Uuid $uuid);
+	
+	/**
+	 * @param Uuid $uuid
+	 * @return void
+	 */
+	public function remove(Uuid $uuid);
 }
