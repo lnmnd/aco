@@ -1,0 +1,16 @@
+<!doctype>
+<html>
+  <head>
+    <title>Article Collector</title>
+  </head>
+  <body>
+    <h1>Article Collections</h1>
+    <div>
+      <ul>
+      {{#acos}}
+        <li><a href="/article-collections/{{uuid}}">{{title}}</a></li>
+      {{/acos}}
+      </ul>
+    </div>
+  </body>
+</html>

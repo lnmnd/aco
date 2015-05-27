@@ -7,10 +7,12 @@ use FastRoute\Dispatcher;
 class WebApp
 {
 	private $apiController;
+	private $htmlController;
 	
-	public function __construct(ApiController $apiController)
+	public function __construct(ApiController $apiController, HtmlController $htmlController)
 	{
 		$this->apiController = $apiController;
+		$this->htmlController = $htmlController;
 	}
 	
 	public function start()
@@ -19,6 +21,8 @@ class WebApp
 			$r->addRoute('POST', '/api/article-collections', [$this->apiController, 'postArticleCollection']);
 			$r->addRoute('GET', '/api/article-collections', [$this->apiController, 'getArticleCollections']);
 			$r->addRoute('GET', '/api/article-collections/{uuid}', [$this->apiController, 'getArticleCollection']);
+			
+			$r->addRoute('GET', '/', [$this->htmlController, 'getArticleCollections']);
 		});
 		
 		$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
