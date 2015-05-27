@@ -3,6 +3,19 @@
 {{#aco}}
   <h1>{{title}}</h1>
   <p>{{description}}</p>
+  <p>index</p>
+  <ul>
+  {{#articles}}
+    <li><a href="#{{title}}">{{title}}</a></li>
+  {{/articles}}
+  </ul>
+  
+  {{#articles}}
+    <h2 id={{title}}>{{title}}</h2>
+    <div>
+      {{{content}}}
+    </div>
+  {{/articles}}
 {{/aco}}
 
 {{>footer.html}}
