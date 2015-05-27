@@ -3,6 +3,8 @@
 namespace Aco;
 
 use Rhumsaa\Uuid\Uuid;
+use Aco\Exception\DoesNotExistException;
+
 interface ArticleCollectionRepository
 {
 	/**
@@ -14,6 +16,7 @@ interface ArticleCollectionRepository
 	/**
 	 * @param Uuid $uuid
 	 * @return ArticleCollection
+	 * @throws DoesNotExistException
 	 */
 	public function get(Uuid $uuid);
 	

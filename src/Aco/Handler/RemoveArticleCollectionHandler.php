@@ -6,6 +6,7 @@ use Rhumsaa\Uuid\Uuid;
 use Aco\Handler;
 use Aco\Command\RemoveArticleCollectionCommand;
 use Aco\ArticleCollectionRepository;
+use Aco\Exception\DoesNotExistException;
 
 class RemoveArticleCollectionHandler implements Handler
 {
@@ -22,10 +23,12 @@ class RemoveArticleCollectionHandler implements Handler
 	/**
 	 * @see \Aco\Handler::handle()
 	 * @param RemoveArticleCollectionCommand $command
+	 * @throws DoesNotExistException
 	 */
 	public function handle($command)
 	{
 		$uuid = Uuid::fromString($command->uuid);
+		$articleCollection = $this->articleCollectionRepository->get($uuid);
 		$this->articleCollectionRepository->remove($uuid);
 	}
 }

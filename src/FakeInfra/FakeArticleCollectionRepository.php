@@ -5,6 +5,7 @@ namespace FakeInfra;
 use Aco\ArticleCollectionRepository;
 use Aco\ArticleCollection;
 use Rhumsaa\Uuid\Uuid;
+use Aco\Exception\DoesNotExistException;
 
 class FakeArticleCollectionRepository implements ArticleCollectionRepository
 {
@@ -24,6 +25,7 @@ class FakeArticleCollectionRepository implements ArticleCollectionRepository
 				return $aco;
 			}
 		}
+		throw new DoesNotExistException();
 	}
 	
 	public function remove(Uuid $uuid)

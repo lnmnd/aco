@@ -44,4 +44,19 @@ class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		
 		$this->assertEmpty($this->acr->articleCollections);
 	}
+	
+	/**
+	 * @test
+	  @expectedException Aco\Exception\DoesNotExistException
+	 */
+	public function does_not_exist()
+	{
+		$furls = ['http://url1' => 'content'];
+		$this->fuf->urls = $furls;
+		$articleCollection = new ArticleCollection('tit', 'des', [$this->af->make(new Url('http://url1'))]);
+		$uuid = $articleCollection->getUuid();
+		
+		$c = new RemoveArticleCollectionCommand($uuid);
+		$this->cb->handle($c);
+	}
 }
