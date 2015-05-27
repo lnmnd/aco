@@ -25,6 +25,7 @@ class WebApp
 			$r->addRoute('GET', '/', [$this->htmlController, 'getArticleCollections']);
 			$r->addRoute('GET', '/article-collections/{uuid}', [$this->htmlController, 'getArticleCollection']);
 			$r->addRoute('GET', '/add', [$this->htmlController, 'addArticleCollection']);
+			$r->addRoute('POST', '/add', [$this->htmlController, 'addArticleCollection']);			
 		});
 		
 		$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

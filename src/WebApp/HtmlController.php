@@ -4,6 +4,7 @@ namespace WebApp;
 
 use AcoQuery\QueryService;
 use Aco\CommandBus;
+use Aco\Command\AddArticleCollectionCommand;
 
 class HtmlController
 {
@@ -20,6 +21,17 @@ class HtmlController
 
 	public function addArticleCollection()
 	{
+		if (isset($_POST['title'])) {
+			$title = $_POST['title'];
+			$description = $_POST['description'];
+			$urls = explode(',', $_POST['urls']);
+			
+			$uuid = $this->commandBus->handle(
+					new AddArticleCollectionCommand($title, $description, $urls)
+			);
+			header('Location: /article-collections/' . $uuid);
+			return;
+		}
 		$this->render('add.html', []);
 	}
 	
