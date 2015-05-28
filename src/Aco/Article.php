@@ -19,7 +19,7 @@ class Article
 	{
 		$this->url = $url;
 		$this->originalContent = $urlFetcher->fetch($url);
-		$this->title = 'unamed';
+		$this->title = $this->extractTitle($this->originalContent);
 		$this->content = $this->extractContent($this->originalContent);
 	}
 	
@@ -41,6 +41,17 @@ class Article
 	public function getContent()
 	{
 		return $this->content;
+	}
+	
+	private function extractTitle($content)
+	{
+		$crawler = new Crawler($content);
+		$nodes = $crawler->filter('head > title');
+		if (count($nodes) === 0) {
+			return 'unamed';
+		} else {
+			return $nodes->first()->text();
+		}
 	}
 	
 	private function extractContent($content)
