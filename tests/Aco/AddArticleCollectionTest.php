@@ -79,6 +79,23 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
 	 * @test
+	 */
+	public function get_titles()
+	{
+		$urls = ['http://localhost/a1'];
+		$furls = ['http://localhost/a1' => '<p>content</p>'];
+		$this->fuf->urls = $furls;
+	
+		$c = new AddArticleCollectionCommand('title', 'description', $urls);
+		$uuid = $this->cb->handle($c);
+	
+		$articles = $this->acr->articleCollections[0]->getArticles();
+		$this->assertEquals('unamed', $articles[0]->getTitle());
+		$this->assertEquals('<p>content</p>', $articles[0]->getContent());
+	}	
+	
+	/**
+	 * @test
 	 * @expectedException Aco\Exception\CannotExtractContentException
 	 */
 	public function no_content_to_extract()

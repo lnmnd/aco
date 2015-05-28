@@ -12,12 +12,14 @@ class Article
 {
 	private $url;
 	private $originalContent;
+	private $title;
 	private $content;
 	
 	public function __construct(UrlFetcher $urlFetcher, Url $url)
 	{
 		$this->url = $url;
 		$this->originalContent = $urlFetcher->fetch($url);
+		$this->title = 'unamed';
 		$this->content = $this->extractContent($this->originalContent);
 	}
 	
@@ -29,6 +31,11 @@ class Article
 	public function getOriginalContent()
 	{
 		return $this->originalContent;
+	}
+
+	public function getTitle()
+	{
+		return $this->title;
 	}
 	
 	public function getContent()
