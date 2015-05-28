@@ -97,7 +97,7 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 		}, false);
 		if ($foundAco) {
 			$articles = array_map(function (Article $x) {
-				return new FullArticle($x->getUrl()->getUrl(), $x->getOriginalContent(), $x->getContent());
+				return new FullArticle($x->getUrl()->getUrl(), $x->getTitle(), $x->getOriginalContent(), $x->getContent());
 			}, $foundAco->getArticles());
 			return new FullAco(
 				$foundAco->getUuid()->toString(),
