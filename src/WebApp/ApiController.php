@@ -22,6 +22,13 @@ class ApiController
 		$this->queryService = $queryService;
 	}
 	
+	public function optionArticleCollection()
+	{
+		header('Access-Control-Allow-Methods: OPTIONS, POST, GET');
+		header('Access-Control-Allow-Headers: content-type');
+		return $this->respond(new \stdClass());
+	}
+	
 	public function postArticleCollection()
 	{
 		try {

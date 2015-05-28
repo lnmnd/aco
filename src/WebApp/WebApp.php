@@ -18,6 +18,7 @@ class WebApp
 	public function start()
 	{
 		$dispatcher = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
+			$r->addRoute('OPTIONS', '/api/article-collections', [$this->apiController, 'optionArticleCollection']);
 			$r->addRoute('POST', '/api/article-collections', [$this->apiController, 'postArticleCollection']);
 			$r->addRoute('GET', '/api/article-collections', [$this->apiController, 'getArticleCollections']);
 			$r->addRoute('GET', '/api/article-collections/{uuid}', [$this->apiController, 'getArticleCollection']);
