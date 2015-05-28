@@ -6,14 +6,14 @@ class FullArticle
 {
 	public $url;
 	public $title;	
-	public $originalContent;
+	public $original_content;
 	public $content;
 	
-	public function __construct($url, $title, $originalContent,  $content)
+	public function __construct($url, $title, $original_content,  $content)
 	{
 		$this->url = $url;
 		$this->title = $title;
-		$this->originalContent = $originalContent;
+		$this->original_content = $original_content;
 		$this->content = $content;
 	}
 }
