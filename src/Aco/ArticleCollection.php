@@ -16,14 +16,14 @@ class ArticleCollection
 	 */
 	private $articles;
 	
-	public function __construct($title, $description, $articles)
+	public function __construct(Uuid $uuid, \Datetime $date, $title, $description, $articles)
 	{
 		if (empty($articles)) {
 			throw new NoArticlesException();
 		}
 		
-		$this->uuid = Uuid::uuid4();
-		$this->date = new \DateTime();
+		$this->uuid = $uuid;
+		$this->date = $date;
 		$this->title = $title;
 		$this->description = $description;
 		$this->articles = $articles;

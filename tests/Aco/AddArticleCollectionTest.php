@@ -7,6 +7,7 @@ use Aco\Command\Aco\Command;
 use Aco\ArticleFactory;
 use Aco\ArticleCollection;
 use Aco\ArticleCollectionRepository;
+use Aco\ArticleCollectionFactory;
 use Aco\UrlFetcher;
 use Aco\Url;
 use FakeInfra\FakeArticleCollectionRepository;
@@ -16,6 +17,7 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 	private $acr;
 	private $fuf;
 	private $af;
+        private $acf;
 	private $cb;
 	
 	public function setUp()
@@ -23,8 +25,9 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$this->acr = new FakeArticleCollectionRepository();
 		$this->fuf = new FakeUrlFetcher();
 		$this->af = new ArticleFactory($this->fuf);
+                $this->acf = new ArticleCollectionFactory();
 		$this->cb = new CommandBus();
-		$this->cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler($this->acr, $this->af));
+		$this->cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler($this->acr, $this->af, $this->acf));
 	}
 	
 	public function testAdd()
