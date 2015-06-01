@@ -19,6 +19,7 @@ class ArticleFactory
 	 */
 	public function make(Url $url)
 	{
-		return new Article($this->urlFetcher, $url);
+                $originalContent = $this->urlFetcher->fetch($url);
+		return new Article($url, $originalContent);
 	}
 }

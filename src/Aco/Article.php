@@ -15,10 +15,10 @@ class Article
 	private $title;
 	private $content;
 	
-	public function __construct(UrlFetcher $urlFetcher, Url $url)
+	public function __construct(Url $url, $originalContent)
 	{
 		$this->url = $url;
-		$this->originalContent = $urlFetcher->fetch($url);
+		$this->originalContent = $originalContent;
 		$this->title = $this->extractTitle($this->originalContent);
 		$this->content = $this->extractContent($this->originalContent);
 	}
