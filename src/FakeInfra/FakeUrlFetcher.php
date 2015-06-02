@@ -5,7 +5,6 @@ namespace FakeInfra;
 use Aco\UrlFetcher;
 use Aco\Url;
 use Aco\Exception\CannotFetchUrlException;
-use Aco\Exception\Aco\Exception;
 
 class FakeUrlFetcher implements UrlFetcher
 {
