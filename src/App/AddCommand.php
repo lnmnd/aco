@@ -34,6 +34,11 @@ class AddCommand extends Command
 				InputArgument::REQUIRED,
 				'Collection description'
 		)
+                ->addArgument(
+                        'tags',
+                        InputArgument::REQUIRED,
+                        'Collection tags'
+                )
 		->addArgument(
 				'urls',
 				InputArgument::REQUIRED | InputArgument::IS_ARRAY,
@@ -47,9 +52,14 @@ class AddCommand extends Command
 		$title = $input->getArgument('title');
 		$description = $input->getArgument('description');
 		$urls = $input->getArgument('urls');
-		
+		$tags = explode(',', $input->getArgument('tags'));
+                // empty
+                if ((count($tags) === 1) && $tags[0] === '') {
+                    $tags = [];
+                }
+
 		$uuid = $this->commandBus->handle(
-				new AddArticleCollectionCommand($title, $description, $urls)
+				new AddArticleCollectionCommand($title, $description, $urls, $tags)
 		);
 		
 		$output->writeln('Added with uuid '.$uuid);
