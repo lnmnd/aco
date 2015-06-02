@@ -43,7 +43,7 @@ class AddArticleCollectionHandler implements Handler
 			$articles[] = $this->articleFactory->make(new Url($url));
 		}
 		$articleCollection = $this->articleCollectionFactory->make(
-                        $command->title, $command->description, $articles);
+                        $command->title, $command->description, $articles, $command->tags);
 		$this->articleCollectionRepository->add($articleCollection);
 		
 		return $articleCollection->getUuid()->toString();

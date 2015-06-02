@@ -104,12 +104,49 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 				$foundAco->getDate(),
 				$foundAco->getTitle(),
 				$foundAco->getDescription(),
+                                $foundAco->getTags(),
 				$articles
 			);
 		} else {
 			throw new ArticleCollectionNotFoundException();
 		}
 	}
+        
+        public function getTags()
+        {
+            $acos = $this->loadAcos();
+            $tags = array_reduce($acos, function ($tags, ArticleCollection $aco) {
+                $acoTags = $aco->getTags();
+                foreach ($acoTags as $tag) {
+                    if (!in_array($tag, $tags)) {
+                        $tags[] = $tag;
+                    }
+                }
+                return $tags;
+            }, []);
+            usort($tags, function ($a, $b) {
+                return $a > $b;
+            });
+            return $tags;
+        }
+        
+        public function getTagsArticleCollections($tag)
+        {
+            $acos = $this->loadAcos();
+            
+            $filteredAcos = array_filter($acos, function (ArticleCollection $aco) use ($tag) {
+                return in_array($tag, $aco->getTags());
+            });
+            
+            $listAcos = array_map(function (ArticleCollection  $aco) {
+                return new ListAco(
+				$aco->getUuid()->toString(),
+				$aco->getDate(),
+				$aco->getTitle(),
+				$aco->getDescription());
+            }, $filteredAcos);
+            return $listAcos;
+        }
 	
 	private function loadAcos()
 	{

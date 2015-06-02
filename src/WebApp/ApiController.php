@@ -73,6 +73,16 @@ class ApiController
 			return $this->respond(new \stdClass());
 		}
 	}
+        
+        public function getTags()
+        {
+            return $this->respond($this->queryService->getTags());
+        }
+        
+        public function getTagsArticleCollections($tag)
+        {
+            return $this->respond($this->queryService->getTagsArticleCollections($tag));
+        }
 	
 	private function badAcoInput($input)
 	{

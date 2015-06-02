@@ -27,10 +27,15 @@ class HtmlController
 			$title = $_POST['title'];
 			$description = $_POST['description'];
 			$urls = explode(',', $_POST['urls']);
-			
+			$tags = explode(',', $_POST['tags']);
+                        // empty
+                        if ((count($tags) === 1) && $tags[0] === '') {
+                            $tags = [];
+                        }
+                
 			try {
 				$uuid = $this->commandBus->handle(
-						new AddArticleCollectionCommand($title, $description, $urls)
+						new AddArticleCollectionCommand($title, $description, $urls, $tags)
 				);
 				header('Location: /article-collections/' . $uuid);
 				return;
@@ -56,6 +61,17 @@ class HtmlController
 			return $this->render('404.html', new \stdClass());
 		}
 	}
+        
+        public function getTags()
+        {
+            $this->render('tags.html', ['tags' => $this->queryService->getTags()]);
+        }
+        
+        public function getTagsArticleCollections($tag)
+        {
+            $this->render('tags-acos.html', ['tag' => $tag,
+                'acos' => $this->queryService->getTagsArticleCollections($tag)]);
+        }        
 	
 	private function render($template, $data)
 	{
