@@ -129,6 +129,24 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
             });
             return $tags;
         }
+        
+        public function getTagsArticleCollections($tag)
+        {
+            $acos = $this->loadAcos();
+            
+            $filteredAcos = array_filter($acos, function (ArticleCollection $aco) use ($tag) {
+                return in_array($tag, $aco->getTags());
+            });
+            
+            $listAcos = array_map(function (ArticleCollection  $aco) {
+                return new ListAco(
+				$aco->getUuid()->toString(),
+				$aco->getDate(),
+				$aco->getTitle(),
+				$aco->getDescription());
+            }, $filteredAcos);
+            return $listAcos;
+        }
 	
 	private function loadAcos()
 	{

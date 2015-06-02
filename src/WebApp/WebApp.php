@@ -23,6 +23,7 @@ class WebApp
 			$r->addRoute('GET', '/api/article-collections', [$this->apiController, 'getArticleCollections']);
 			$r->addRoute('GET', '/api/article-collections/{uuid}', [$this->apiController, 'getArticleCollection']);
                         $r->addRoute('GET', '/api/tags', [$this->apiController, 'getTags']);
+                        $r->addRoute('GET', '/api/tags/{tag}', [$this->apiController, 'getTagsArticleCollections']);
 			
 			$r->addRoute('GET', '/', [$this->htmlController, 'getArticleCollections']);
 			$r->addRoute('GET', '/article-collections/{uuid}', [$this->htmlController, 'getArticleCollection']);

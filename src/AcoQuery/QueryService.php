@@ -24,4 +24,10 @@ interface QueryService
          * return string[]
          */
         public function getTags();
+        
+        /**
+         * @param string $tag
+         * @return ListAco[]
+         */
+        public function getTagsArticleCollections($tag);
 }
