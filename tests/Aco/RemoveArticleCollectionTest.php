@@ -3,12 +3,8 @@
 use Aco\CommandBus;
 use Aco\Handler\RemoveArticleCollectionHandler;
 use Aco\Command\RemoveArticleCollectionCommand;
-use Aco\Command\Aco\Command;
 use Aco\ArticleFactory;
-use Aco\ArticleCollection;
-use Aco\ArticleCollectionRepository;
 use Aco\ArticleCollectionFactory;
-use Aco\UrlFetcher;
 use Aco\Url;
 use FakeInfra\FakeArticleCollectionRepository;
 use FakeInfra\FakeUrlFetcher;
@@ -38,9 +34,10 @@ class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 	{
 		$furls = ['http://url1' => 'content'];
 		$this->fuf->urls = $furls;
-		$articleCollection = $this->acf->make('tit', 'des', [$this->af->make(new Url('http://url1'))]);
-		$uuid = $articleCollection->getUuid();
+                $articles = [$this->af->make(new Url('http://url1'))];
+		$articleCollection = $this->acf->make('tit', 'des', $articles);
 		$this->acr->articleCollections[] = $articleCollection;
+           	$uuid = $articleCollection->getUuid();
 		
 		$c = new RemoveArticleCollectionCommand($uuid);
 		$this->cb->handle($c);
@@ -50,13 +47,14 @@ class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
 	 * @test
-	  @expectedException Aco\Exception\DoesNotExistException
+	 * @expectedException Aco\Exception\DoesNotExistException
 	 */
 	public function does_not_exist()
 	{
 		$furls = ['http://url1' => 'content'];
 		$this->fuf->urls = $furls;
-		$articleCollection = $this->acf->make('tit', 'des', [$this->af->make(new Url('http://url1'))]);
+                $articles = [$this->af->make(new Url('http://url1'))];
+		$articleCollection = $this->acf->make('tit', 'des', $articles);
 		$uuid = $articleCollection->getUuid();
 		
 		$c = new RemoveArticleCollectionCommand($uuid);
