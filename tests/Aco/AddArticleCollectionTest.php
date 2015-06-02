@@ -45,7 +45,10 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($uuid, $acos[0]->getUuid());                
 		$articles = $acos[0]->getArticles();
 		$this->assertEquals(2, count($articles));
-		$this->assertEquals('a1', $articles[0]->getOriginalContent());
+                $article1 = $articles[0];
+		$this->assertEquals('a1', $article1->getOriginalContent());
+                $article2 = $articles[1];
+                $this->assertEquals('a2', $article2->getOriginalContent());
 	}
 	
 	/**
