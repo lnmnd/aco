@@ -66,6 +66,12 @@ class HtmlController
         {
             $this->render('tags.html', ['tags' => $this->queryService->getTags()]);
         }
+        
+        public function getTagsArticleCollections($tag)
+        {
+            $this->render('tags-acos.html', ['tag' => $tag,
+                'acos' => $this->queryService->getTagsArticleCollections($tag)]);
+        }        
 	
 	private function render($template, $data)
 	{

@@ -30,6 +30,7 @@ class WebApp
 			$r->addRoute('GET', '/add', [$this->htmlController, 'addArticleCollection']);
 			$r->addRoute('POST', '/add', [$this->htmlController, 'addArticleCollection']);	
                         $r->addRoute('GET', '/tags', [$this->htmlController, 'getTags']);
+                        $r->addRoute('GET', '/tags/{tag}', [$this->htmlController, 'getTagsArticleCollections']);                        
 		});
 		
 		$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
