@@ -27,10 +27,15 @@ class HtmlController
 			$title = $_POST['title'];
 			$description = $_POST['description'];
 			$urls = explode(',', $_POST['urls']);
-			
+			$tags = explode(',', $_POST['tags']);
+                        // empty
+                        if ((count($tags) === 1) && $tags[0] === '') {
+                            $tags = [];
+                        }
+                
 			try {
 				$uuid = $this->commandBus->handle(
-						new AddArticleCollectionCommand($title, $description, $urls)
+						new AddArticleCollectionCommand($title, $description, $urls, $tags)
 				);
 				header('Location: /article-collections/' . $uuid);
 				return;
