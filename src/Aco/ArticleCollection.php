@@ -15,8 +15,12 @@ class ArticleCollection
 	 * @var Article[]
 	 */
 	private $articles;
+        /**
+         * @var string[]
+         */
+        private $tags;        
 	
-	public function __construct(Uuid $uuid, \Datetime $date, $title, $description, $articles)
+	public function __construct(Uuid $uuid, \Datetime $date, $title, $description, $articles, $tags = [])
 	{
 		if (empty($articles)) {
 			throw new NoArticlesException();
@@ -27,6 +31,7 @@ class ArticleCollection
 		$this->title = $title;
 		$this->description = $description;
 		$this->articles = $articles;
+                $this->tags = $tags;
 	}
 	
 	/**
@@ -62,6 +67,11 @@ class ArticleCollection
 		return $this->articles;
 	}
 	
+        public function getTags()
+        {
+            return $this->tags;
+        }
+        
 	public function equals(ArticleCollection $x)
 	{
 		return $this->uuid === $x->getUuid();

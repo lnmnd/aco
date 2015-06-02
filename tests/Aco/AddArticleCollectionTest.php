@@ -34,7 +34,8 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$this->fuf->urls = $furls;
                 
                 $urls = ['http://localhost/a1', 'http://localhost/a2'];                
-		$c = new AddArticleCollectionCommand('title', 'description', $urls);
+                $tags = ['tag1', 'tag2'];
+		$c = new AddArticleCollectionCommand('title', 'description', $urls, $tags);
 		$uuid = $this->cb->handle($c);
 		
 		$this->assertEquals(36, strlen($uuid));
@@ -43,6 +44,7 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase {
 		$acos = $this->acr->articleCollections;                
 		$this->assertEquals(1, count($acos));
 		$this->assertEquals($uuid, $acos[0]->getUuid());                
+                $this->assertEquals(['tag1', 'tag2'], $acos[0]->getTags());
 		$articles = $acos[0]->getArticles();
 		$this->assertEquals(2, count($articles));
                 $article1 = $articles[0];
