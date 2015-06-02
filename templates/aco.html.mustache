@@ -4,6 +4,12 @@
   <a class="push-right" href="/">to index</a>
   <h1 id="top">{{title}}</h1>
   <div>{{description}}</div>
+  <div>
+    Tags:
+    {{#tags}}
+      {{.}}
+    {{/tags}}
+  </div>
   <ul>
   {{#articles}}
     <li><a href="#{{url}}">{{title}}</a></li>

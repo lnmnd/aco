@@ -104,6 +104,7 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 				$foundAco->getDate(),
 				$foundAco->getTitle(),
 				$foundAco->getDescription(),
+                                $foundAco->getTags(),
 				$articles
 			);
 		} else {
