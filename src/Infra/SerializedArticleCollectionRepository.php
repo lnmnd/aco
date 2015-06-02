@@ -111,6 +111,24 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 			throw new ArticleCollectionNotFoundException();
 		}
 	}
+        
+        public function getTags()
+        {
+            $acos = $this->loadAcos();
+            $tags = array_reduce($acos, function ($tags, ArticleCollection $aco) {
+                $acoTags = $aco->getTags();
+                foreach ($acoTags as $tag) {
+                    if (!in_array($tag, $tags)) {
+                        $tags[] = $tag;
+                    }
+                }
+                return $tags;
+            }, []);
+            usort($tags, function ($a, $b) {
+                return $a > $b;
+            });
+            return $tags;
+        }
 	
 	private function loadAcos()
 	{

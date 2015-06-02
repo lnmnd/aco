@@ -22,11 +22,13 @@ class WebApp
 			$r->addRoute('POST', '/api/article-collections', [$this->apiController, 'postArticleCollection']);
 			$r->addRoute('GET', '/api/article-collections', [$this->apiController, 'getArticleCollections']);
 			$r->addRoute('GET', '/api/article-collections/{uuid}', [$this->apiController, 'getArticleCollection']);
+                        $r->addRoute('GET', '/api/tags', [$this->apiController, 'getTags']);
 			
 			$r->addRoute('GET', '/', [$this->htmlController, 'getArticleCollections']);
 			$r->addRoute('GET', '/article-collections/{uuid}', [$this->htmlController, 'getArticleCollection']);
 			$r->addRoute('GET', '/add', [$this->htmlController, 'addArticleCollection']);
-			$r->addRoute('POST', '/add', [$this->htmlController, 'addArticleCollection']);			
+			$r->addRoute('POST', '/add', [$this->htmlController, 'addArticleCollection']);	
+                        $r->addRoute('GET', '/tags', [$this->htmlController, 'getTags']);
 		});
 		
 		$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

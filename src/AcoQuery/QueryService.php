@@ -19,4 +19,9 @@ interface QueryService
 	 * @throws AcoQuery\Exception\ArticleCollectionNotFoundException
 	 */
 	public function getArticleCollection($uuid);
+        
+        /**
+         * return string[]
+         */
+        public function getTags();
 }

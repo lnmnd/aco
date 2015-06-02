@@ -61,6 +61,11 @@ class HtmlController
 			return $this->render('404.html', new \stdClass());
 		}
 	}
+        
+        public function getTags()
+        {
+            $this->render('tags.html', ['tags' => $this->queryService->getTags()]);
+        }
 	
 	private function render($template, $data)
 	{
