@@ -145,7 +145,7 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 				$aco->getTitle(),
 				$aco->getDescription());
             }, $filteredAcos);
-            return $listAcos;
+            return array_values($listAcos);
         }
 	
 	private function loadAcos()
