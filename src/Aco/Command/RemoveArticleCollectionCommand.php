@@ -4,10 +4,10 @@ namespace Aco\Command;
 
 class RemoveArticleCollectionCommand
 {
-	public $uuid;
+    public $uuid;
 
-	public function __construct($uuid)
-	{
-		$this->uuid = $uuid;
-	}
+    public function __construct($uuid)
+    {
+        $this->uuid = $uuid;
+    }
 }

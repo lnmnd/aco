@@ -8,16 +8,16 @@ use Aco\Exception\CannotFetchUrlException;
 
 class FakeUrlFetcher implements UrlFetcher
 {
-	public $urls = [];
-	public $callUrls = [];
-	
-	public function fetch(Url $url)
-	{
-		$this->callUrls[] = $url->getUrl();
-		if (array_key_exists($url->getUrl(), $this->urls)) {
-			return $this->urls[$url->getUrl()];
-		} else {
-			throw new CannotFetchUrlException();
-		}
-	}
+    public $urls = [];
+    public $callUrls = [];
+
+    public function fetch(Url $url)
+    {
+        $this->callUrls[] = $url->getUrl();
+        if (array_key_exists($url->getUrl(), $this->urls)) {
+            return $this->urls[$url->getUrl()];
+        } else {
+            throw new CannotFetchUrlException();
+        }
+    }
 }

@@ -4,5 +4,5 @@ namespace Aco;
 
 interface Handler
 {
-	public function handle($command);
+    public function handle($command);
 }
