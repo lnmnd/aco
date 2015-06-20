@@ -31,4 +31,11 @@ interface QueryService
      * @return ListAco[]
      */
     public function getTagsArticleCollections($tag);
+
+    /**
+     * Returns all the articles
+     *
+     * @return FullArticle[]
+     */
+    public function getArticles();
 }

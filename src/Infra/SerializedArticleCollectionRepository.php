@@ -156,6 +156,27 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
         return array_values($listAcos);
     }
 
+    public function getArticles()
+    {
+        $articles = [];
+        $acos = array_reverse($this->loadAcos());
+        foreach ($acos as $aco) {
+            foreach ($aco->getArticles() as $x) {
+                $articles[] = new FullArticle(
+                    $x->getUrl()->getUrl(),
+                    $x->getTitle(),
+                    $x->getOriginalContent(),
+                    $x->getContent()
+                );
+            }
+        }
+        
+        return $articles;
+    }
+
+    /**
+     * @return ArticleCollection[]
+     */
     private function loadAcos()
     {
         if ($this->fileInitialized()) {

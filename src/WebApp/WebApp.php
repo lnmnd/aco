@@ -8,11 +8,13 @@ class WebApp
 {
     private $apiController;
     private $htmlController;
+    private $feedController;
 
-    public function __construct(ApiController $apiController, HtmlController $htmlController)
+    public function __construct(ApiController $apiController, HtmlController $htmlController, FeedController $feedController)
     {
         $this->apiController = $apiController;
         $this->htmlController = $htmlController;
+        $this->feedController = $feedController;
     }
 
     public function start()
@@ -31,6 +33,8 @@ class WebApp
             $r->addRoute('POST', '/add', [$this->htmlController, 'addArticleCollection']);
             $r->addRoute('GET', '/tags', [$this->htmlController, 'getTags']);
             $r->addRoute('GET', '/tags/{tag}', [$this->htmlController, 'getTagsArticleCollections']);
+
+            $r->addRoute('GET', '/feed', [$this->feedController, 'getArticleCollections']);
         });
 
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
