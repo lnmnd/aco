@@ -23,9 +23,9 @@ class RemoveCommand extends Command
         ->setName('aco:rm')
         ->setDescription('Remove an article collection')
         ->addArgument(
-                'uuid',
-                InputArgument::REQUIRED,
-                'Collection UUID'
+            'uuid',
+            InputArgument::REQUIRED,
+            'Collection UUID'
         )
         ;
     }
@@ -35,7 +35,7 @@ class RemoveCommand extends Command
         $uuid = $input->getArgument('uuid');
 
         $this->commandBus->handle(
-                new RemoveArticleCollectionCommand($uuid)
+            new RemoveArticleCollectionCommand($uuid)
         );
 
         $output->writeln('Removed article collection with uuid '.$uuid);

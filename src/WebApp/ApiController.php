@@ -43,7 +43,7 @@ class ApiController
 
             $res = new \stdClass();
             $res->uuid = $this->commandBus->handle(
-                    new AddArticleCollectionCommand($input->title, $input->description, $input->urls)
+                new AddArticleCollectionCommand($input->title, $input->description, $input->urls)
             );
 
             return $this->respond($res);
@@ -82,15 +82,15 @@ class ApiController
         }
     }
 
-        public function getTags()
-        {
-            return $this->respond($this->queryService->getTags());
-        }
+    public function getTags()
+    {
+        return $this->respond($this->queryService->getTags());
+    }
 
-        public function getTagsArticleCollections($tag)
-        {
-            return $this->respond($this->queryService->getTagsArticleCollections($tag));
-        }
+    public function getTagsArticleCollections($tag)
+    {
+        return $this->respond($this->queryService->getTagsArticleCollections($tag));
+    }
 
     private function badAcoInput($input)
     {

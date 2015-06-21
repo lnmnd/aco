@@ -71,10 +71,11 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
          */
         foreach ($acos as $aco) {
             $lacos[] = new ListAco(
-                    $aco->getUuid()->toString(),
-                    $aco->getDate(),
-                    $aco->getTitle(),
-                    $aco->getDescription());
+                $aco->getUuid()->toString(),
+                $aco->getDate(),
+                $aco->getTitle(),
+                $aco->getDescription()
+            );
         }
         usort($lacos, function (ListAco $a, ListAco $b) {
             return $a->date < $b->date;
@@ -92,66 +93,68 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
         $foundAco = array_reduce($acos, function ($foundAco, ArticleCollection $aco) use ($uuid) {
             if ($aco->getUuid()->toString() === $uuid) {
                 return $aco;
-            } else {
-                return $foundAco;
             }
-        }, false);
-        if ($foundAco) {
-            $articles = array_map(function (Article $x) {
-                return new FullArticle($x->getUrl()->getUrl(), $x->getTitle(), $x->getOriginalContent(), $x->getContent());
-            }, $foundAco->getArticles());
 
-            return new FullAco(
-                $foundAco->getUuid()->toString(),
-                $foundAco->getDate(),
-                $foundAco->getTitle(),
-                $foundAco->getDescription(),
-                                $foundAco->getTags(),
-                $articles
-            );
-        } else {
+            return $foundAco;
+        }, false);
+        
+        if (!$foundAco) {
             throw new ArticleCollectionNotFoundException();
         }
+        
+        $articles = array_map(function (Article $x) {
+            return new FullArticle($x->getUrl()->getUrl(), $x->getTitle(), $x->getOriginalContent(), $x->getContent());
+        }, $foundAco->getArticles());
+
+        return new FullAco(
+            $foundAco->getUuid()->toString(),
+            $foundAco->getDate(),
+            $foundAco->getTitle(),
+            $foundAco->getDescription(),
+            $foundAco->getTags(),
+            $articles
+        );
     }
 
-        public function getTags()
-        {
-            $acos = $this->loadAcos();
-            $tags = array_reduce($acos, function ($tags, ArticleCollection $aco) {
-                $acoTags = $aco->getTags();
-                foreach ($acoTags as $tag) {
-                    if (!in_array($tag, $tags)) {
-                        $tags[] = $tag;
-                    }
+    public function getTags()
+    {
+        $acos = $this->loadAcos();
+        $tags = array_reduce($acos, function ($tags, ArticleCollection $aco) {
+            $acoTags = $aco->getTags();
+            foreach ($acoTags as $tag) {
+                if (!in_array($tag, $tags)) {
+                    $tags[] = $tag;
                 }
-
-                return $tags;
-            }, []);
-            usort($tags, function ($a, $b) {
-                return $a > $b;
-            });
+            }
 
             return $tags;
-        }
+        }, []);
+        usort($tags, function ($a, $b) {
+            return $a > $b;
+        });
 
-        public function getTagsArticleCollections($tag)
-        {
-            $acos = $this->loadAcos();
+        return $tags;
+    }
 
-            $filteredAcos = array_filter($acos, function (ArticleCollection $aco) use ($tag) {
+    public function getTagsArticleCollections($tag)
+    {
+        $acos = $this->loadAcos();
+
+        $filteredAcos = array_filter($acos, function (ArticleCollection $aco) use ($tag) {
                 return in_array($tag, $aco->getTags());
-            });
+        });
 
-            $listAcos = array_map(function (ArticleCollection  $aco) {
-                return new ListAco(
+        $listAcos = array_map(function (ArticleCollection  $aco) {
+            return new ListAco(
                 $aco->getUuid()->toString(),
                 $aco->getDate(),
                 $aco->getTitle(),
-                $aco->getDescription());
-            }, $filteredAcos);
+                $aco->getDescription()
+            );
+        }, $filteredAcos);
 
-            return array_values($listAcos);
-        }
+        return array_values($listAcos);
+    }
 
     private function loadAcos()
     {

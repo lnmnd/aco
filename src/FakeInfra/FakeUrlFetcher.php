@@ -14,10 +14,10 @@ class FakeUrlFetcher implements UrlFetcher
     public function fetch(Url $url)
     {
         $this->callUrls[] = $url->getUrl();
-        if (array_key_exists($url->getUrl(), $this->urls)) {
-            return $this->urls[$url->getUrl()];
-        } else {
+        if (!array_key_exists($url->getUrl(), $this->urls)) {
             throw new CannotFetchUrlException();
         }
+        
+        return $this->urls[$url->getUrl()];
     }
 }

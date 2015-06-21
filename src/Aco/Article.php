@@ -47,32 +47,34 @@ class Article
     {
         $crawler = new Crawler($content);
         $nodes = $crawler->filter('head > title');
+        
         if (count($nodes) === 0) {
             return 'unamed';
-        } else {
-            return $nodes->first()->text();
         }
+        
+        return $nodes->first()->text();
     }
 
     private function extractContent($content)
     {
         $elements = $this->getAllElements($content);
-        $biggest_num = 0;
-        $biggest_tag = null;
+        $biggestNum = 0;
+        $biggestTag = null;
         foreach ($elements as $el) {
-            $p_num = $this->countParagraphs($el);
-            if ($p_num > $biggest_num) {
-                $biggest_num = $p_num;
-                $biggest_tag = $el;
+            $pNum = $this->countParagraphs($el);
+            if ($pNum > $biggestNum) {
+                $biggestNum = $pNum;
+                $biggestTag = $el;
             }
         }
 
-        if ($biggest_num == 0) {
+        if ($biggestNum == 0) {
             throw new CannotExtractContentException();
         }
 
         return $this->innerHtml(
-                $this->removeStyles($biggest_tag));
+            $this->removeStyles($biggestTag)
+        );
     }
 
     private function getAllElements($content)
@@ -123,9 +125,9 @@ class Article
         $innerHTML = "";
         $children = $element->childNodes;
         foreach ($children as $child) {
-            $tmp_dom = new DOMDocument();
-            $tmp_dom->appendChild($tmp_dom->importNode($child, true));
-            $innerHTML.=trim($tmp_dom->saveHTML());
+            $tmpDom = new DOMDocument();
+            $tmpDom->appendChild($tmpDom->importNode($child, true));
+            $innerHTML.=trim($tmpDom->saveHTML());
         }
 
         return $innerHTML;

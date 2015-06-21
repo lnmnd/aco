@@ -14,20 +14,21 @@ interface QueryService
 
     /**
      * Returns an article collection
-     * @param  string                                                $uuid
+     *
+     * @param  string $uuid
      * @return FullAco
      * @throws AcoQuery\Exception\ArticleCollectionNotFoundException
      */
     public function getArticleCollection($uuid);
 
-        /**
-         * return string[]
-         */
-        public function getTags();
+    /**
+     * return string[]
+     */
+    public function getTags();
 
-        /**
-         * @param string $tag
-         * @return ListAco[]
-         */
-        public function getTagsArticleCollections($tag);
+    /**
+     * @param string $tag
+     * @return ListAco[]
+     */
+    public function getTagsArticleCollections($tag);
 }

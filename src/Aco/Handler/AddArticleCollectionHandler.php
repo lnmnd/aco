@@ -21,14 +21,15 @@ class AddArticleCollectionHandler implements Handler
      */
     private $articleFactory;
 
-        private $articleCollectionFactory;
+    private $articleCollectionFactory;
 
-    public function __construct(ArticleCollectionRepository $articleCollectionRepository, ArticleFactory $articleFactory,
-                ArticleCollectionFactory $articleCollectionFactory)
+    public function __construct(ArticleCollectionRepository $articleCollectionRepository,
+                                ArticleFactory $articleFactory,
+                                ArticleCollectionFactory $articleCollectionFactory)
     {
         $this->articleCollectionRepository = $articleCollectionRepository;
         $this->articleFactory = $articleFactory;
-                $this->articleCollectionFactory = $articleCollectionFactory;
+        $this->articleCollectionFactory = $articleCollectionFactory;
     }
 
     /**
@@ -42,7 +43,11 @@ class AddArticleCollectionHandler implements Handler
             $articles[] = $this->articleFactory->make(new Url($url));
         }
         $articleCollection = $this->articleCollectionFactory->make(
-                        $command->title, $command->description, $articles, $command->tags);
+            $command->title,
+            $command->description,
+            $articles,
+            $command->tags
+        );
         $this->articleCollectionRepository->add($articleCollection);
 
         return $articleCollection->getUuid()->toString();

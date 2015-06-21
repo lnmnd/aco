@@ -17,8 +17,10 @@ $inj->define('Infra\SerializedArticleCollectionRepository', [
 ]);
 $inj->alias('Aco\UrlFetcher', 'Infra\GuzzleUrlFetcher');
 $inj->define('Aco\CommandBus', [
-        ':handlers' => [['Aco\Command\AddArticleCollectionCommand', $inj->make('Aco\Handler\AddArticleCollectionHandler')],
-                        ['Aco\Command\RemoveArticleCollectionCommand', $inj->make('Aco\Handler\RemoveArticleCollectionHandler')]],
+        ':handlers' => [['Aco\Command\AddArticleCollectionCommand',
+                         $inj->make('Aco\Handler\AddArticleCollectionHandler')],
+                        ['Aco\Command\RemoveArticleCollectionCommand',
+                         $inj->make('Aco\Handler\RemoveArticleCollectionHandler')]],
 ]);
 $inj->prepare('App\AddCommand', function ($addCommand, $inj) {
     $addCommand->setCommandBus($inj->make('Aco\CommandBus'));

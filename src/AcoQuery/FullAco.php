@@ -8,7 +8,7 @@ class FullAco
     public $date;
     public $title;
     public $description;
-        public $tags;
+    public $tags;
     public $articles;
 
     public function __construct($uuid, $date, $title, $description, $tags, $articles)
@@ -17,7 +17,7 @@ class FullAco
         $this->date = $date;
         $this->title = $title;
         $this->description = $description;
-                $this->tags = $tags;
+        $this->tags = $tags;
         $this->articles = $articles;
     }
 }

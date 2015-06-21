@@ -24,24 +24,24 @@ class AddCommand extends Command
         ->setName('aco:add')
         ->setDescription('Add an article collection')
         ->addArgument(
-                'title',
-                InputArgument::REQUIRED,
-                'Collection title'
+            'title',
+            InputArgument::REQUIRED,
+            'Collection title'
         )
         ->addArgument(
-                'description',
-                InputArgument::REQUIRED,
-                'Collection description'
+            'description',
+            InputArgument::REQUIRED,
+            'Collection description'
         )
-                ->addArgument(
-                        'tags',
-                        InputArgument::REQUIRED,
-                        'Collection tags'
-                )
         ->addArgument(
-                'urls',
-                InputArgument::REQUIRED | InputArgument::IS_ARRAY,
-                'List of URLs'
+            'tags',
+            InputArgument::REQUIRED,
+            'Collection tags'
+        )
+        ->addArgument(
+            'urls',
+            InputArgument::REQUIRED | InputArgument::IS_ARRAY,
+            'List of URLs'
         )
         ;
     }
@@ -52,13 +52,13 @@ class AddCommand extends Command
         $description = $input->getArgument('description');
         $urls = $input->getArgument('urls');
         $tags = explode(',', $input->getArgument('tags'));
-                // empty
-                if ((count($tags) === 1) && $tags[0] === '') {
-                    $tags = [];
-                }
+        // empty
+        if ((count($tags) === 1) && $tags[0] === '') {
+            $tags = [];
+        }
 
         $uuid = $this->commandBus->handle(
-                new AddArticleCollectionCommand($title, $description, $urls, $tags)
+            new AddArticleCollectionCommand($title, $description, $urls, $tags)
         );
 
         $output->writeln('Added with uuid '.$uuid);

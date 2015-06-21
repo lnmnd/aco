@@ -11,10 +11,10 @@ interface ArticleCollectionRepository
      * @param  ArticleCollection $articleCollection
      * @return void
      */
-    public function add (ArticleCollection $articleCollection);
+    public function add(ArticleCollection $articleCollection);
 
     /**
-     * @param  Uuid                  $uuid
+     * @param  Uuid $uuid
      * @return ArticleCollection
      * @throws DoesNotExistException
      */

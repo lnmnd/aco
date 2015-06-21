@@ -10,11 +10,11 @@ class Url
 
     public function __construct($url)
     {
-        if (filter_var($url, FILTER_VALIDATE_URL)) {
-            $this->url = $url;
-        } else {
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
             throw new BadUrlException();
         }
+        
+        $this->url = $url;
     }
 
     public function getUrl()

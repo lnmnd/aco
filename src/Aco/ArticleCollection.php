@@ -67,10 +67,10 @@ class ArticleCollection
         return $this->articles;
     }
 
-        public function getTags()
-        {
-            return $this->tags;
-        }
+    public function getTags()
+    {
+        return $this->tags;
+    }
 
     public function equals(ArticleCollection $x)
     {

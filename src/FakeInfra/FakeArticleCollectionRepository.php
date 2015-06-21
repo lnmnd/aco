@@ -20,7 +20,7 @@ class FakeArticleCollectionRepository implements ArticleCollectionRepository
 
     public function get(Uuid $uuid)
     {
-               $this->called = true;
+        $this->called = true;
         foreach ($this->articleCollections as $aco) {
             if ($aco->getUuid()->equals($uuid)) {
                 return $aco;
@@ -31,7 +31,7 @@ class FakeArticleCollectionRepository implements ArticleCollectionRepository
 
     public function remove(ArticleCollection $articleCollection)
     {
-                $this->called = true;
+        $this->called = true;
         $i = 0;
         foreach ($this->articleCollections as $aco) {
             if ($aco->getUuid()->equals($articleCollection->getUuid())) {
