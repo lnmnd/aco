@@ -62,7 +62,7 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 
     // QueryService
 
-    public function getArticleCollections()
+    public function getArticleCollections($offset = 0, $limit = 0)
     {
         $acos = $this->loadAcos();
         $lacos = [];
@@ -81,7 +81,7 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
             return $a->date < $b->date;
         });
 
-        return $lacos;
+        return ($limit === 0) ? $lacos : array_slice($lacos, $offset, $limit);
     }
 
     public function getArticleCollection($uuid)
@@ -116,7 +116,7 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
         );
     }
 
-    public function getTags()
+    public function getTags($offset = 0, $limit = 0)
     {
         $acos = $this->loadAcos();
         $tags = array_reduce($acos, function ($tags, ArticleCollection $aco) {
@@ -133,10 +133,10 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
             return $a > $b;
         });
 
-        return $tags;
+        return ($limit === 0) ? $tags : array_slice($tags, $offset, $limit);
     }
 
-    public function getTagsArticleCollections($tag)
+    public function getTagsArticleCollections($tag, $offset = 0, $limit = 0)
     {
         $acos = $this->loadAcos();
 
@@ -153,10 +153,11 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
             );
         }, $filteredAcos);
 
-        return array_values($listAcos);
+        $acos = array_values($listAcos);
+        return ($limit === 0) ? $acos : array_slice($acos, $offset, $limit);
     }
 
-    public function getArticles()
+    public function getArticles($offset = 0, $limit = 0)
     {
         $articles = [];
         $acos = array_reverse($this->loadAcos());
@@ -171,7 +172,7 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
             }
         }
         
-        return $articles;
+        return ($limit === 0) ? $articles : array_slice($articles, $offset, $limit);
     }
 
     /**
