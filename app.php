@@ -7,14 +7,23 @@ use Symfony\Component\Console\Application;
 if (file_exists(__DIR__.'/.env')) {
     Dotenv::load(__DIR__);
 }
-Dotenv::required('REPOSITORY_PATH');
+//Dotenv::required('REPOSITORY_PATH');
+Dotenv::required('DATABASE_URL');
+
+$dburl = parse_url(getenv('DATABASE_URL'));
 
 $inj = new Auryn\Injector();
-$inj->alias('Aco\ArticleCollectionRepository', 'Infra\SerializedArticleCollectionRepository');
-$inj->alias('AcoQuery\QueryService', 'Infra\SerializedArticleCollectionRepository');
-$inj->define('Infra\SerializedArticleCollectionRepository', [
-        ':file' => getenv('REPOSITORY_PATH'),
+$inj->share('PDO');
+$inj->define('PDO', [
+    'pgsql:dbname='.ltrim($dburl["path"], '/').';host='.$dburl["host"],
+    $dburl["user"],
+    $dburl["pass"],
 ]);
+//$inj->define('Infra\SerializedArticleCollectionRepository', [
+//        ':file' => getenv('REPOSITORY_PATH'),
+//]);
+$inj->alias('Aco\ArticleCollectionRepository', 'Infra\PgsqlArticleCollectionRepository');
+$inj->alias('AcoQuery\QueryService', 'Infra\PgsqlArticleCollectionRepository');
 $inj->alias('Aco\UrlFetcher', 'Infra\GuzzleUrlFetcher');
 $inj->define('Aco\CommandBus', [
         ':handlers' => [['Aco\Command\AddArticleCollectionCommand',

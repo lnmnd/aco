@@ -20,4 +20,9 @@ class FullAco
         $this->tags = $tags;
         $this->articles = $articles;
     }
+
+    public static function fromArray($x)
+    {
+        return new FullAco($x['uuid'], $x['date'], $x['title'], $x['description'], $x['tags'], $x['articles']);
+    }
 }

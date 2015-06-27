@@ -19,4 +19,9 @@ class ListAco
         $this->title = $title;
         $this->description = $description;
     }
+
+    public static function fromArray($x)
+    {
+        return new ListAco($x['uuid'], $x['date'], $x['title'], $x['description']);
+    }
 }
