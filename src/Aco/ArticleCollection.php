@@ -15,10 +15,10 @@ class ArticleCollection
      * @var Article[]
      */
     private $articles;
-        /**
-         * @var string[]
-         */
-        private $tags;
+    /**
+     * @var string[]
+     */
+    private $tags;
 
     public function __construct(Uuid $uuid, \Datetime $date, $title, $description, $articles, $tags = [])
     {
