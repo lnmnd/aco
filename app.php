@@ -5,10 +5,10 @@ require __DIR__.'/vendor/autoload.php';
 use Symfony\Component\Console\Application;
 
 if (file_exists(__DIR__.'/.env')) {
-    Dotenv::load(__DIR__);
+    \Dotenv::load(__DIR__);
 }
-//Dotenv::required('REPOSITORY_PATH');
-Dotenv::required('DATABASE_URL');
+//\Dotenv::required('REPOSITORY_PATH');
+\Dotenv::required('DATABASE_URL');
 
 $dburl = parse_url(getenv('DATABASE_URL'));
 
