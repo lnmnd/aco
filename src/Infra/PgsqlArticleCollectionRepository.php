@@ -10,6 +10,7 @@ use \Aco\Exception\DoesNotExistException;
 use \AcoQuery\QueryService;
 use \AcoQuery\ListAco;
 use \AcoQuery\FullAco;
+use \AcoQuery\FullArticle;
 use \Rhumsaa\Uuid\Uuid;
 
 class PgsqlArticleCollectionRepository implements ArticleCollectionRepository, QueryService
@@ -119,13 +120,13 @@ class PgsqlArticleCollectionRepository implements ArticleCollectionRepository, Q
         }
         $st->bindValue('offset', $offset);
         $st->execute();
-        return array_map(
-            ['\AcoQuery\ListAco', 'fromArray'],
-            array_map(function ($x) {
-                $x['date'] = \DateTime::createFromFormat(ArticleCollection::DATE_FORMAT, $x['date']);
-                return $x;
-            }, $st->fetchAll())
-        );
+
+        $acos = [];
+        while ($x = $st->fetch()) {
+            $x['date'] = \DateTime::createFromFormat(ArticleCollection::DATE_FORMAT, $x['date']);
+            $acos[] = ListAco::fromArray($x);
+        }
+        return $acos;
     }
 
     public function getArticleCollection($uuid)
@@ -144,7 +145,11 @@ class PgsqlArticleCollectionRepository implements ArticleCollectionRepository, Q
         );
         $st->bindValue('uuid', $uuid);
         $st->execute();
-        $acoArr['articles'] =  array_map(['\AcoQuery\FullArticle', 'fromArray'], $st->fetchAll());
+
+        $acoArr['articles'] = [];
+        while ($x = $st->fetch()) {
+            $acoArr['articles'][] =  FullArticle::fromArray($x);
+        }
 
         // tags
         $st = $this->pdo->prepare(
@@ -152,9 +157,11 @@ class PgsqlArticleCollectionRepository implements ArticleCollectionRepository, Q
         );
         $st->bindValue('uuid', $uuid);
         $st->execute();
-        $acoArr['tags'] = array_map(function ($x) {
-            return $x['tag'];
-        }, $st->fetchAll());
+
+        $acoArr['tags'] = [];
+        while ($x = $st->fetch()) {
+            $acoArr['tags'][] = $x['tag'];
+        }
 
         return FullAco::fromArray($acoArr);
     }
@@ -195,13 +202,13 @@ class PgsqlArticleCollectionRepository implements ArticleCollectionRepository, Q
         );
         $st->bindValue('tag_id', $tagId);
         $st->execute();
-        return array_map(
-            ['AcoQuery\ListAco', 'fromArray'],
-            array_map(function ($x) {
-                $x['date'] = \DateTime::createFromFormat(ArticleCollection::DATE_FORMAT, $x['date']);
-                return $x;
-            }, $st->fetchAll())
-        );
+
+        $acos = [];
+        while ($x = $st->fetch()) {
+            $x['date'] = \DateTime::createFromFormat(ArticleCollection::DATE_FORMAT, $x['date']);
+            $acos[] = ListAco::fromArray($x);
+        }
+        return $acos;
     }
 
     public function getArticles($offset = 0, $limit = 0)
@@ -215,6 +222,11 @@ class PgsqlArticleCollectionRepository implements ArticleCollectionRepository, Q
         }
         $st->bindValue('offset', $offset);
         $st->execute();
-        return array_map(['AcoQuery\FullArticle', 'fromArray'], $st->fetchAll());
+
+        $arts = [];
+        while ($x = $st->fetch()) {
+            $arts[] = FullArticle::fromArray($x);
+        }
+        return $arts;
     }
 }
