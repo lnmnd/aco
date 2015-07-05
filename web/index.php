@@ -3,7 +3,7 @@
 require __DIR__.'/../vendor/autoload.php';
 
 if (file_exists(__DIR__.'/../.env')) {
-	Dotenv::load(__DIR__.'/..');
+    Dotenv::load(__DIR__.'/..');
 }
 //Dotenv::required('REPOSITORY_PATH');
 Dotenv::required('DATABASE_URL');
@@ -24,13 +24,13 @@ $inj->alias('Aco\ArticleCollectionRepository', 'Infra\PgsqlArticleCollectionRepo
 $inj->alias('AcoQuery\QueryService', 'Infra\PgsqlQueryService');
 $inj->alias('Aco\UrlFetcher', 'Infra\GuzzleUrlFetcher');
 $inj->define('Aco\CommandBus', [
-		':handlers' => [['Aco\Command\AddArticleCollectionCommand', $inj->make('Aco\Handler\AddArticleCollectionHandler')]],
+    ':handlers' => [['Aco\Command\AddArticleCollectionCommand', $inj->make('Aco\Handler\AddArticleCollectionHandler')]],
 ]);
 
 $inj->delegate('Mustache_Engine', function () {
-	return new Mustache_Engine(array(
-			'loader' => new Mustache_Loader_FilesystemLoader(__DIR__.'/../templates'),
-	));
+    return new Mustache_Engine(array(
+        'loader' => new Mustache_Loader_FilesystemLoader(__DIR__.'/../templates'),
+    ));
 });
 
 $app = $inj->make('WebApp\WebApp');
