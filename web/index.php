@@ -21,7 +21,7 @@ $inj->define('PDO', [
 //		':file' => getenv('REPOSITORY_PATH'),
 //]);
 $inj->alias('Aco\ArticleCollectionRepository', 'Infra\PgsqlArticleCollectionRepository');
-$inj->alias('AcoQuery\QueryService', 'Infra\PgsqlArticleCollectionRepository');
+$inj->alias('AcoQuery\QueryService', 'Infra\PgsqlQueryService');
 $inj->alias('Aco\UrlFetcher', 'Infra\GuzzleUrlFetcher');
 $inj->define('Aco\CommandBus', [
 		':handlers' => [['Aco\Command\AddArticleCollectionCommand', $inj->make('Aco\Handler\AddArticleCollectionHandler')]],
