@@ -7,6 +7,7 @@ use \AcoQuery\ListAco;
 use \AcoQuery\FullAco;
 use \AcoQuery\FullArticle;
 use \Aco\ArticleCollection;
+use \AcoQuery\Exception\ArticleCollectionNotFoundException;
 
 class PgsqlQueryService implements QueryService
 {
@@ -45,6 +46,11 @@ class PgsqlQueryService implements QueryService
         $st->bindValue('uuid', $uuid);
         $st->execute();
         $acoArr = $st->fetch();
+
+        if (!$acoArr) {
+            throw new ArticleCollectionNotFoundException();
+        }
+
         $acoArr['date'] = \DateTime::createFromFormat(ArticleCollection::DATE_FORMAT, $acoArr['date']);
 
         // articles
