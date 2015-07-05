@@ -69,10 +69,12 @@ class PgsqlArticleCollectionRepository implements ArticleCollectionRepository
         $acoSt->bindValue('uuid', $uuidStr);
         $acoSt->execute();
         $acoArr = $acoSt->fetch();
-        $acoArr['date'] = \DateTime::createFromFormat(ArticleCollection::DATE_FORMAT, $acoArr['date']);
+
         if (!$acoArr) {
             throw new DoesNotExistException();
         }
+
+        $acoArr['date'] = \DateTime::createFromFormat(ArticleCollection::DATE_FORMAT, $acoArr['date']);
 
         $articles = [];
         $artSt = $this->pdo->prepare('select url, title, content, original_content from article where aco_uuid=:uuid');
