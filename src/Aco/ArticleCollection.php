@@ -7,6 +7,10 @@ use Aco\Exception\NoArticlesException;
 
 class ArticleCollection
 {
+    /**
+     * @var string
+     */
+    const DATE_FORMAT = 'Y-m-d H:i:s';
     private $uuid;
     private $date;
     private $title;
