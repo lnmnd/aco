@@ -98,23 +98,22 @@ class PgsqlQueryService implements QueryService
 
     public function getTagsArticleCollections($tag, $offset = 0, $limit = 0)
     {
-        $sql = 'select id from tag where tag=:tag offset :offset';
+        $sql = 'select id from tag where tag=:tag';
+        $st = $this->pdo->prepare($sql);
+        $st->bindValue('tag', $tag);
+        $st->execute();
+        $row = $st->fetch();
+        $tagId = $row['id'];
+
+        $sql = 'select uuid, date, title, description from article_collection inner join aco_tag on uuid=aco_uuid where tag_id=:tag_id offset :offset';
         if ($limit === 0) {
             $st = $this->pdo->prepare($sql);
         } else {
             $st = $this->pdo->prepare($sql.' limit :limit');
             $st->bindValue('limit', $limit);
         }
-        $st->bindValue('offset', $offset);
-        $st->bindValue('tag', $tag);
-        $st->execute();
-        $row = $st->fetch();
-        $tagId = $row['id'];
-        
-        $st = $this->pdo->prepare(
-            'select uuid, date, title, description from article_collection inner join aco_tag on uuid=aco_uuid where tag_id=:tag_id'
-        );
         $st->bindValue('tag_id', $tagId);
+        $st->bindValue('offset', $offset);
         $st->execute();
 
         $acos = [];
