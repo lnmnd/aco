@@ -91,9 +91,11 @@ class PgsqlQueryService implements QueryService
         }
         $st->bindValue('offset', $offset);
         $st->execute();
-        return array_map(function ($x) {
-            return $x['tag'];
-        }, $st->fetchAll());
+        $xs = [];
+        while ($x = $st->fetch()) {
+            $xs[] = $x['tag'];
+        }
+        return $xs;
     }
 
     public function getTagsArticleCollections($tag, $offset = 0, $limit = 0)
