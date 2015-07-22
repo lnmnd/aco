@@ -1,0 +1,7 @@
+{
+    "directories": ["vendor", "src"],
+    "files": ["app.php"],
+    "main": "app.php",
+    "output": "aco.phar",
+    "stub": true
+}
