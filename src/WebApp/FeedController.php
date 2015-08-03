@@ -29,7 +29,7 @@ class FeedController
             $link->addAttribute('href', $a->url);
             $link->addAttribute('rel', 'alternate');
             $link->addAttribute('type', 'text/html');
-            $content = $entry->addChild('content', htmlspecialchars($a->content));
+            $content = $entry->addChild('content', $a->content);
             $content->addAttribute('type', 'html');
         }
 
