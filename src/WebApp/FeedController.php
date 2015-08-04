@@ -20,7 +20,7 @@ class FeedController
         $feed = $xml->addChild('feed');
         $feed->addAttribute('xmlns', 'http://www.w3.org/2005/Atom');
         $feed->addChild('title', 'Article Collections');
-            
+
         $articles = $this->queryService->getArticles();
         foreach ($articles as $a) {
             $entry = $feed->addChild('entry');

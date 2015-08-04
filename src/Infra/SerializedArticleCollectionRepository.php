@@ -97,11 +97,11 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
 
             return $foundAco;
         }, false);
-        
+
         if (!$foundAco) {
             throw new ArticleCollectionNotFoundException();
         }
-        
+
         $articles = array_map(function (Article $x) {
             return new FullArticle($x->getUrl()->getUrl(), $x->getTitle(), $x->getOriginalContent(), $x->getContent());
         }, $foundAco->getArticles());
@@ -154,6 +154,7 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
         }, $filteredAcos);
 
         $acos = array_values($listAcos);
+
         return ($limit === 0) ? $acos : array_slice($acos, $offset, $limit);
     }
 
@@ -171,7 +172,7 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
                 );
             }
         }
-        
+
         return ($limit === 0) ? $articles : array_slice($articles, $offset, $limit);
     }
 

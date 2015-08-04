@@ -28,7 +28,7 @@ class PgsqlArticleCollectionRepository implements ArticleCollectionRepository
         $st->bindValue('title', $articleCollection->getTitle());
         $st->bindValue('description', $articleCollection->getDescription());
         $st->execute();
-        
+
         $st = $this->pdo->prepare('insert into article (aco_uuid, url, title, content, original_content) values (:aco_uuid, :url, :title, :content, :original_content)');
 
         foreach ($articleCollection->getArticles() as $art) {

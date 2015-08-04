@@ -35,6 +35,7 @@ class PgsqlQueryService implements QueryService
             $x['date'] = \DateTime::createFromFormat(ArticleCollection::DATE_FORMAT, $x['date']);
             $acos[] = ListAco::fromArray($x);
         }
+
         return $acos;
     }
 
@@ -95,6 +96,7 @@ class PgsqlQueryService implements QueryService
         while ($x = $st->fetch()) {
             $xs[] = $x['tag'];
         }
+
         return $xs;
     }
 
@@ -123,6 +125,7 @@ class PgsqlQueryService implements QueryService
             $x['date'] = \DateTime::createFromFormat(ArticleCollection::DATE_FORMAT, $x['date']);
             $acos[] = ListAco::fromArray($x);
         }
+
         return $acos;
     }
 
@@ -142,6 +145,7 @@ class PgsqlQueryService implements QueryService
         while ($x = $st->fetch()) {
             $arts[] = FullArticle::fromArray($x);
         }
+
         return $arts;
     }
 }

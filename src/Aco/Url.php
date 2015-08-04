@@ -13,7 +13,7 @@ class Url
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
             throw new BadUrlException();
         }
-        
+
         $this->url = $url;
     }
 

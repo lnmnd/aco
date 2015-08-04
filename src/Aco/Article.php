@@ -47,11 +47,11 @@ class Article
     {
         $crawler = new Crawler($content);
         $nodes = $crawler->filter('head > title');
-        
+
         if (count($nodes) === 0) {
             return 'unamed';
         }
-        
+
         return $nodes->first()->text();
     }
 

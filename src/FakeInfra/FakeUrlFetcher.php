@@ -17,7 +17,7 @@ class FakeUrlFetcher implements UrlFetcher
         if (!array_key_exists($url->getUrl(), $this->urls)) {
             throw new CannotFetchUrlException();
         }
-        
+
         return $this->urls[$url->getUrl()];
     }
 }

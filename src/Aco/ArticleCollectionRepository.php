@@ -14,7 +14,7 @@ interface ArticleCollectionRepository
     public function add(ArticleCollection $articleCollection);
 
     /**
-     * @param  Uuid $uuid
+     * @param  Uuid                  $uuid
      * @return ArticleCollection
      * @throws DoesNotExistException
      */
