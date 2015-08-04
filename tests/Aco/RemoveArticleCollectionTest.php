@@ -1,14 +1,10 @@
 <?php
+namespace Aco;
 
-use Aco\CommandBus;
 use Aco\Handler\RemoveArticleCollectionHandler;
 use Aco\Command\RemoveArticleCollectionCommand;
-use Aco\ArticleFactory;
-use Aco\ArticleCollectionFactory;
-use Aco\Url;
 use FakeInfra\FakeArticleCollectionRepository;
 use FakeInfra\FakeUrlFetcher;
-use Aco\Aco;
 
 class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase
 {

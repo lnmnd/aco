@@ -1,10 +1,8 @@
 <?php
+namespace Aco;
 
-use Aco\CommandBus;
 use Aco\Handler\AddArticleCollectionHandler;
 use Aco\Command\AddArticleCollectionCommand;
-use Aco\ArticleFactory;
-use Aco\ArticleCollectionFactory;
 use FakeInfra\FakeArticleCollectionRepository;
 use FakeInfra\FakeUrlFetcher;
 
