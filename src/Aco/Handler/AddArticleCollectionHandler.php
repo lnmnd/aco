@@ -6,8 +6,9 @@ use Aco\Handler;
 use Aco\Command\AddArticleCollectionCommand;
 use Aco\ArticleCollectionRepository;
 use Aco\ArticleCollectionFactory;
-use Aco\ArticleFactory;
+use Aco\Article;
 use Aco\Url;
+use Aco\UrlFetcher;
 
 class AddArticleCollectionHandler implements Handler
 {
@@ -15,20 +16,15 @@ class AddArticleCollectionHandler implements Handler
      * @var ArticleCollectionRepository
      */
     private $articleCollectionRepository;
-    /**
-     * @var ArticleFactory
-     */
-    private $articleFactory;
-
     private $articleCollectionFactory;
 
     public function __construct(ArticleCollectionRepository $articleCollectionRepository,
-                                ArticleFactory $articleFactory,
-                                ArticleCollectionFactory $articleCollectionFactory)
+                                ArticleCollectionFactory $articleCollectionFactory,
+                                UrlFetcher $urlFetcher)
     {
         $this->articleCollectionRepository = $articleCollectionRepository;
-        $this->articleFactory = $articleFactory;
         $this->articleCollectionFactory = $articleCollectionFactory;
+        $this->urlFetcher = $urlFetcher;
     }
 
     /**
@@ -40,7 +36,16 @@ class AddArticleCollectionHandler implements Handler
     {
         $articles = [];
         foreach ($command->urls as $url) {
-            $articles[] = $this->articleFactory->make(new Url($url));
+            $url = new Url($url);
+            $originalContent = $this->urlFetcher->fetch($url);
+            $title = \Aco\extractTitle($originalContent);
+            $content = \Aco\extractContent($originalContent);
+            $articles[] = new Article(
+                $url,
+                $title,
+                $content,
+                $originalContent
+            );
         }
         $articleCollection = $this->articleCollectionFactory->make(
             $command->title,
