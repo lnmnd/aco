@@ -9,11 +9,11 @@ class Article
     private $title;
     private $content;
 
-    public function __construct(Url $url, $originalContent)
+    public function __construct(Url $url, $title, $originalContent)
     {
         $this->url = $url;
         $this->originalContent = $originalContent;
-        $this->title = extractTitle($this->originalContent);
+        $this->title = $title;
         $this->content = extractContent($this->originalContent);
     }
 
