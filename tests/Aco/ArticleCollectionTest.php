@@ -10,7 +10,7 @@ class ArticleCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $uuid = Uuid::uuid4();
         $now = new \DateTime();
-        $art = new Article(new Url('http://localhost'), 'title', 'content');
+        $art = new Article(new Url('http://localhost'), 'title', 'content', 'content');
         $aco = new ArticleCollection(
             $uuid,
             $now,
@@ -31,8 +31,8 @@ class ArticleCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testAddArticle()
     {
-        $art1 = new Article(new Url('http://localhost'), 'title', 'content1');
-        $art2 = new Article(new Url('http://localhost'), 'title', 'content2');
+        $art1 = new Article(new Url('http://localhost'), 'title', 'content1', 'content1');
+        $art2 = new Article(new Url('http://localhost'), 'title', 'content2', 'content2');
         $aco = new ArticleCollection(
             Uuid::uuid4(),
             new \DateTime(),

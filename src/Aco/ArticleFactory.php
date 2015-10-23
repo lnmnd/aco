@@ -21,7 +21,8 @@ class ArticleFactory
     {
         $originalContent = $this->urlFetcher->fetch($url);
         $title = extractTitle($originalContent);
+        $content = extractContent($originalContent);
 
-        return new Article($url, $title, $originalContent);
+        return new Article($url, $title, $content, $originalContent);
     }
 }

@@ -9,12 +9,12 @@ class Article
     private $title;
     private $content;
 
-    public function __construct(Url $url, $title, $originalContent)
+    public function __construct(Url $url, $title, $content, $originalContent)
     {
         $this->url = $url;
         $this->originalContent = $originalContent;
         $this->title = $title;
-        $this->content = extractContent($this->originalContent);
+        $this->content = $content;
     }
 
     public function getUrl()
