@@ -53,7 +53,7 @@ function countParagraphs($node)
     $n = 0;
     foreach ($node->childNodes as $c) {
         if (isset($c->tagName) && (($c->tagName == 'p') || ($c->tagName == 'P'))) {
-            $n++;
+            ++$n;
         }
     }
 
@@ -86,12 +86,12 @@ function removeStyles(DOMElement $el)
 
 function innerHtml(\DOMElement $element)
 {
-    $innerHTML = "";
+    $innerHTML = '';
     $children = $element->childNodes;
     foreach ($children as $child) {
         $tmpDom = new DOMDocument();
         $tmpDom->appendChild($tmpDom->importNode($child, true));
-        $innerHTML.=trim($tmpDom->saveHTML());
+        $innerHTML .= trim($tmpDom->saveHTML());
     }
 
     return $innerHTML;

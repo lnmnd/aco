@@ -29,8 +29,8 @@ class ListCommand extends Command
     {
         $output->writeln('Article collections:');
         $acos = $this->queryService->getArticleCollections();
-        /**
-         * @var $aco ListAco
+        /*
+         * @var ListAco
          */
         foreach ($acos as $aco) {
             $txt = '- '.$aco->uuid.' ['.$aco->date->format('i:s').'] '.$aco->title;

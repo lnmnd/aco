@@ -35,11 +35,10 @@ class ArticleCollection
         $this->title = $title;
         $this->description = $description;
         $this->articles = $articles;
-                $this->tags = $tags;
+        $this->tags = $tags;
     }
 
     /**
-     * @return void
      */
     public function addArticle(Article $article)
     {

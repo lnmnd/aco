@@ -1,4 +1,5 @@
 <?php
+
 namespace Aco;
 
 use Aco\Handler\RemoveArticleCollectionHandler;
@@ -11,7 +12,7 @@ class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase
     private $acr;
     private $fuf;
     private $af;
-        private $acf;
+    private $acf;
     private $cb;
 
     public function setUp()
@@ -19,7 +20,7 @@ class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase
         $this->acr = new FakeArticleCollectionRepository();
         $this->fuf = new FakeUrlFetcher();
         $this->af = new ArticleFactory($this->fuf);
-                $this->acf = new ArticleCollectionFactory();
+        $this->acf = new ArticleCollectionFactory();
         $this->cb = new CommandBus();
         $this->cb->register('Aco\Command\RemoveArticleCollectionCommand', new RemoveArticleCollectionHandler($this->acr));
     }
@@ -31,10 +32,10 @@ class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $furls = ['http://url1' => 'content'];
         $this->fuf->urls = $furls;
-                $articles = [$this->af->make(new Url('http://url1'))];
+        $articles = [$this->af->make(new Url('http://url1'))];
         $articleCollection = $this->acf->make('tit', 'des', $articles);
         $this->acr->articleCollections[] = $articleCollection;
-               $uuid = $articleCollection->getUuid();
+        $uuid = $articleCollection->getUuid();
 
         $c = new RemoveArticleCollectionCommand($uuid);
         $this->cb->handle($c);
@@ -50,7 +51,7 @@ class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $furls = ['http://url1' => 'content'];
         $this->fuf->urls = $furls;
-                $articles = [$this->af->make(new Url('http://url1'))];
+        $articles = [$this->af->make(new Url('http://url1'))];
         $articleCollection = $this->acf->make('tit', 'des', $articles);
         $uuid = $articleCollection->getUuid();
 

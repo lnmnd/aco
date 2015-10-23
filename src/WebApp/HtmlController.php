@@ -37,7 +37,7 @@ class HtmlController
                 $uuid = $this->commandBus->handle(
                     new AddArticleCollectionCommand($title, $description, $urls, $tags)
                 );
-                header('Location: /article-collections/' . $uuid);
+                header('Location: /article-collections/'.$uuid);
 
                 return;
             } catch (\Exception $e) {
@@ -74,7 +74,7 @@ class HtmlController
     public function getTagsArticleCollections($tag)
     {
         $this->render('tags-acos.html', ['tag' => $tag,
-                                         'acos' => $this->queryService->getTagsArticleCollections($tag)]);
+                                         'acos' => $this->queryService->getTagsArticleCollections($tag), ]);
     }
 
     private function render($template, $data)

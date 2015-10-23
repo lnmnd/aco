@@ -6,7 +6,6 @@ use Aco\Handler;
 use Aco\Command\AddArticleCollectionCommand;
 use Aco\ArticleCollectionRepository;
 use Aco\ArticleCollectionFactory;
-use Aco\ArticleCollection;
 use Aco\ArticleFactory;
 use Aco\Url;
 
@@ -34,6 +33,7 @@ class AddArticleCollectionHandler implements Handler
 
     /**
      * @see \Aco\Handler::handle()
+     *
      * @param AddArticleCollectionCommand $command
      */
     public function handle($command)

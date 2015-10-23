@@ -8,21 +8,21 @@ use Aco\Exception\DoesNotExistException;
 interface ArticleCollectionRepository
 {
     /**
-     * @param  ArticleCollection $articleCollection
-     * @return void
+     * @param ArticleCollection $articleCollection
      */
     public function add(ArticleCollection $articleCollection);
 
     /**
-     * @param  Uuid                  $uuid
+     * @param Uuid $uuid
+     *
      * @return ArticleCollection
+     *
      * @throws DoesNotExistException
      */
     public function get(Uuid $uuid);
 
     /**
-     * @param  ArticleCollection $articleCollection
-     * @return void
+     * @param ArticleCollection $articleCollection
      */
     public function remove(ArticleCollection $articleCollection);
 }

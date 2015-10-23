@@ -19,6 +19,6 @@ class FullArticle
 
     public static function fromArray($x)
     {
-        return new FullArticle($x['url'], $x['title'], $x['original_content'], $x['content']);
+        return new self($x['url'], $x['title'], $x['original_content'], $x['content']);
     }
 }

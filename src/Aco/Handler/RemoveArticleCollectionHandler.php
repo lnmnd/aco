@@ -22,7 +22,9 @@ class RemoveArticleCollectionHandler implements Handler
 
     /**
      * @see \Aco\Handler::handle()
-     * @param  RemoveArticleCollectionCommand $command
+     *
+     * @param RemoveArticleCollectionCommand $command
+     *
      * @throws DoesNotExistException
      */
     public function handle($command)

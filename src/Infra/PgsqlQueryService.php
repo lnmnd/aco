@@ -2,12 +2,12 @@
 
 namespace Infra;
 
-use \AcoQuery\QueryService;
-use \AcoQuery\ListAco;
-use \AcoQuery\FullAco;
-use \AcoQuery\FullArticle;
-use \Aco\ArticleCollection;
-use \AcoQuery\Exception\ArticleCollectionNotFoundException;
+use AcoQuery\QueryService;
+use AcoQuery\ListAco;
+use AcoQuery\FullAco;
+use AcoQuery\FullArticle;
+use Aco\ArticleCollection;
+use AcoQuery\Exception\ArticleCollectionNotFoundException;
 
 class PgsqlQueryService implements QueryService
 {
@@ -63,7 +63,7 @@ class PgsqlQueryService implements QueryService
 
         $acoArr['articles'] = [];
         while ($x = $st->fetch()) {
-            $acoArr['articles'][] =  FullArticle::fromArray($x);
+            $acoArr['articles'][] = FullArticle::fromArray($x);
         }
 
         // tags

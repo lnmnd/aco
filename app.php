@@ -15,9 +15,9 @@ $dburl = parse_url(getenv('DATABASE_URL'));
 $inj = new Auryn\Injector();
 $inj->share('PDO');
 $inj->define('PDO', [
-    'pgsql:dbname='.ltrim($dburl["path"], '/').';host='.$dburl["host"],
-    $dburl["user"],
-    $dburl["pass"],
+    'pgsql:dbname='.ltrim($dburl['path'], '/').';host='.$dburl['host'],
+    $dburl['user'],
+    $dburl['pass'],
 ]);
 //$inj->define('Infra\SerializedArticleCollectionRepository', [
 //        ':file' => getenv('REPOSITORY_PATH'),
@@ -27,9 +27,9 @@ $inj->alias('AcoQuery\QueryService', 'Infra\PgsqlQueryService');
 $inj->alias('Aco\UrlFetcher', 'Infra\GuzzleUrlFetcher');
 $inj->define('Aco\CommandBus', [
         ':handlers' => [['Aco\Command\AddArticleCollectionCommand',
-                         $inj->make('Aco\Handler\AddArticleCollectionHandler')],
+                         $inj->make('Aco\Handler\AddArticleCollectionHandler'), ],
                         ['Aco\Command\RemoveArticleCollectionCommand',
-                         $inj->make('Aco\Handler\RemoveArticleCollectionHandler')]],
+                         $inj->make('Aco\Handler\RemoveArticleCollectionHandler'), ], ],
 ]);
 $inj->prepare('App\AddCommand', function ($addCommand, $inj) {
     $addCommand->setCommandBus($inj->make('Aco\CommandBus'));

@@ -2,12 +2,12 @@
 
 namespace Infra;
 
-use \Aco\ArticleCollectionRepository;
-use \Aco\ArticleCollection;
-use \Aco\Article;
-use \Aco\Url;
-use \Aco\Exception\DoesNotExistException;
-use \Rhumsaa\Uuid\Uuid;
+use Aco\ArticleCollectionRepository;
+use Aco\ArticleCollection;
+use Aco\Article;
+use Aco\Url;
+use Aco\Exception\DoesNotExistException;
+use Rhumsaa\Uuid\Uuid;
 
 class PgsqlArticleCollectionRepository implements ArticleCollectionRepository
 {

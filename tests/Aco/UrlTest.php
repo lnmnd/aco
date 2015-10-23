@@ -1,4 +1,5 @@
 <?php
+
 namespace Aco;
 
 class UrlTest extends \PHPUnit_Framework_TestCase

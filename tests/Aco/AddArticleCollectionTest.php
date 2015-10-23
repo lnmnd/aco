@@ -1,4 +1,5 @@
 <?php
+
 namespace Aco;
 
 use Aco\Handler\AddArticleCollectionHandler;

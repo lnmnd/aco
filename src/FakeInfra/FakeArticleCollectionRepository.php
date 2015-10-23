@@ -38,7 +38,7 @@ class FakeArticleCollectionRepository implements ArticleCollectionRepository
                 unset($this->articleCollections[$i]);
                 $this->articleCollections = array_values($this->articleCollections);
             }
-            $i++;
+            ++$i;
         }
     }
 }

@@ -10,7 +10,6 @@ class DummyHandler implements Handler
 {
     public function handle($command)
     {
-
     }
 }
 

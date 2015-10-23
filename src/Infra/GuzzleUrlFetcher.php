@@ -7,7 +7,6 @@ use GuzzleHttp\Exception\ConnectException;
 use Aco\UrlFetcher;
 use Aco\Url;
 use Aco\Exception\CannotFetchUrlException;
-use Aco\Exception\Aco\Exception;
 
 class GuzzleUrlFetcher implements UrlFetcher
 {

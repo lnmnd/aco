@@ -10,7 +10,6 @@ use AcoQuery\QueryService;
 use AcoQuery\ListAco;
 use AcoQuery\Exception\ArticleCollectionNotFoundException;
 use AcoQuery\FullAco;
-use AcoQuery\AcoQuery;
 use AcoQuery\FullArticle;
 use Rhumsaa\Uuid\Uuid;
 
@@ -55,7 +54,7 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
                 unset($acos[$i]);
                 $acos = array_values($acos);
             }
-            $i++;
+            ++$i;
         }
         $this->saveAcos($acos);
     }
@@ -66,8 +65,8 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
     {
         $acos = $this->loadAcos();
         $lacos = [];
-        /**
-         * @var $aco ArticleCollection
+        /*
+         * @var ArticleCollection
          */
         foreach ($acos as $aco) {
             $lacos[] = new ListAco(
@@ -87,8 +86,8 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
     public function getArticleCollection($uuid)
     {
         $acos = $this->loadAcos();
-        /**
-         * @var $foundAco ArticleCollection
+        /*
+         * @var ArticleCollection
          */
         $foundAco = array_reduce($acos, function ($foundAco, ArticleCollection $aco) use ($uuid) {
             if ($aco->getUuid()->toString() === $uuid) {
@@ -197,7 +196,7 @@ class SerializedArticleCollectionRepository implements ArticleCollectionReposito
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     private function fileInitialized()
     {
