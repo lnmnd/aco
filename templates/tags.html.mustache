@@ -1,12 +1,10 @@
-{{>header.html}}
+{{#block_content}}
+  <a class="push-right" href="/">to index</a>
+  <h1>Tags</h1>
 
-<a class="push-right" href="/">to index</a>
-<h1>Tags</h1>
-
-<ul>
+  <ul>
     {{#tags}}
       <li><a href="/tags/{{.}}">{{.}}</a></li>
     {{/tags}}
-</ul>
-
-{{>footer.html}}
+  </ul>
+{{/block_content}}

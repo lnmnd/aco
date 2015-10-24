@@ -1,13 +1,11 @@
-{{>header.html}}
-
-<a class="push-right" href="/">to index</a>
-<h1>Tag: {{tag}}</h1>
-<div>
-  <ul>
-  {{#acos}}
-    <li><a href="/article-collections/{{uuid}}">{{title}}</a></li>
-  {{/acos}}
-  </ul>
-</div>
-    
-{{>footer.html}}
+{{#block_content}}
+  <a class="push-right" href="/">to index</a>
+  <h1>Tag: {{tag}}</h1>
+  <div>
+    <ul>
+      {{#acos}}
+        <li><a href="/article-collections/{{uuid}}">{{title}}</a></li>
+      {{/acos}}
+    </ul>
+  </div>
+{{/block_content}}

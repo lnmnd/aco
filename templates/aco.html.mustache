@@ -1,29 +1,27 @@
-{{>header.html}}
-
-{{#aco}}
-  <a class="push-right" href="/">to index</a>
-  <h1 id="top">{{title}}</h1>
-  <div>{{description}}</div>
-  <div>
-    Tags:
-    {{#tags}}
-      <a href="/tags/{{.}}">{{.}}</a>
-    {{/tags}}
-  </div>
-  <ul>
-  {{#articles}}
-    <li><a href="#{{url}}">{{title}}</a></li>
-  {{/articles}}
-  </ul>
-  
-  {{#articles}}
-    <h2 id={{url}}><pre>{{url}}</pre></h2>
-    <div>
-      {{{content}}}
-    </div>
+{{#block_content}}
+  {{#aco}}
     <a class="push-right" href="/">to index</a>
-    <a href="#top">top</a>
-  {{/articles}}
-{{/aco}}
-
-{{>footer.html}}
+    <h1 id="top">{{title}}</h1>
+    <div>{{description}}</div>
+    <div>
+      Tags:
+      {{#tags}}
+        <a href="/tags/{{.}}">{{.}}</a>
+      {{/tags}}
+    </div>
+    <ul>
+      {{#articles}}
+        <li><a href="#{{url}}">{{title}}</a></li>
+      {{/articles}}
+    </ul>
+    
+    {{#articles}}
+      <h2 id={{url}}><pre>{{url}}</pre></h2>
+      <div>
+        {{{content}}}
+      </div>
+      <a class="push-right" href="/">to index</a>
+      <a href="#top">top</a>
+    {{/articles}}
+  {{/aco}}
+{{/block_content}}
