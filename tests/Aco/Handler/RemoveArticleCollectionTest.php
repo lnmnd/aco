@@ -1,12 +1,15 @@
 <?php
 
-namespace Aco;
+namespace Aco\Handler;
 
 use Rhumsaa\Uuid\Uuid;
-use Aco\Handler\RemoveArticleCollectionHandler;
 use Aco\Command\RemoveArticleCollectionCommand;
 use FakeInfra\FakeArticleCollectionRepository;
 use FakeInfra\FakeUrlFetcher;
+use Aco\CommandBus;
+use Aco\Url;
+use Aco\Article;
+use Aco\ArticleCollection;
 
 class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Aco;
+namespace Aco\Handler;
 
-use Aco\Handler\AddArticleCollectionHandler;
 use Aco\Command\AddArticleCollectionCommand;
 use FakeInfra\FakeArticleCollectionRepository;
 use FakeInfra\FakeUrlFetcher;
+use Aco\CommandBus;
 
 class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase
 {
