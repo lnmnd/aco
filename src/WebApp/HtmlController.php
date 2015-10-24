@@ -23,7 +23,7 @@ class HtmlController
         $this->blockContent = function ($tmpl, $helper) {
             $content = $helper->render($tmpl);
 
-            $this->render(
+            return $this->render(
                 'base.html', ['content' => $content]
             );
         };
@@ -53,12 +53,12 @@ class HtmlController
                 $error = true;
             }
         }
-        $this->renderContent('add.html', ['error' => $error]);
+        echo $this->renderContent('add.html', ['error' => $error]);
     }
 
     public function getArticleCollections()
     {
-        $this->renderContent(
+        echo $this->renderContent(
             'index.html',
             ['acos' => $this->queryService->getArticleCollections()]
         );
@@ -67,31 +67,31 @@ class HtmlController
     public function getArticleCollection($uuid)
     {
         try {
-            $this->renderContent(
+            echo $this->renderContent(
                 'aco.html',
                 ['aco' => $this->queryService->getArticleCollection($uuid)]);
         } catch (ArticleCollectionNotFoundException $e) {
             header('HTTP/1.0. 404 Not Found');
 
-            $this->renderContent('404.html', []);
+            echo $this->renderContent('404.html', []);
         }
     }
 
     public function getTags()
     {
-        $this->renderContent('tags.html',
-                             ['tags' => $this->queryService->getTags()]);
+        echo $this->renderContent('tags.html',
+                                  ['tags' => $this->queryService->getTags()]);
     }
 
     public function getTagsArticleCollections($tag)
     {
-        $this->renderContent('tags-acos.html', ['tag' => $tag,
-                                                'acos' => $this->queryService->getTagsArticleCollections($tag), ]);
+        echo $this->renderContent('tags-acos.html', ['tag' => $tag,
+                                                     'acos' => $this->queryService->getTagsArticleCollections($tag), ]);
     }
 
     private function render($template, $data)
     {
-        echo $this->mustache->render($template, $data);
+        return $this->mustache->render($template, $data);
     }
 
     private function renderContent($template, $data)
