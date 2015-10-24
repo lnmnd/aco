@@ -2,6 +2,7 @@
 
 namespace Aco;
 
+use Rhumsaa\Uuid\Uuid;
 use Aco\Handler\RemoveArticleCollectionHandler;
 use Aco\Command\RemoveArticleCollectionCommand;
 use FakeInfra\FakeArticleCollectionRepository;
@@ -11,14 +12,12 @@ class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase
 {
     private $acr;
     private $fuf;
-    private $acf;
     private $cb;
 
     public function setUp()
     {
         $this->acr = new FakeArticleCollectionRepository();
         $this->fuf = new FakeUrlFetcher();
-        $this->acf = new ArticleCollectionFactory();
         $this->cb = new CommandBus();
         $this->cb->register('Aco\Command\RemoveArticleCollectionCommand', new RemoveArticleCollectionHandler($this->acr));
     }
@@ -36,7 +35,12 @@ class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase
             'content',
             'content'
         )];
-        $articleCollection = $this->acf->make('tit', 'des', $articles);
+        $articleCollection = new ArticleCollection(
+            $uuid = Uuid::uuid4(),
+            new \DateTime(),
+            'tit',
+            'des',
+            $articles);
         $this->acr->articleCollections[] = $articleCollection;
         $uuid = $articleCollection->getUuid();
 
@@ -59,7 +63,12 @@ class RemoveArticleCollectionTest extends \PHPUnit_Framework_TestCase
             'title',
             'content',
             'content')];
-        $articleCollection = $this->acf->make('tit', 'des', $articles);
+        $articleCollection = new ArticleCollection(
+            Uuid::uuid4(),
+            new \DateTime(),
+            'tit',
+            'des',
+            $articles);
         $uuid = $articleCollection->getUuid();
 
         $c = new RemoveArticleCollectionCommand($uuid);

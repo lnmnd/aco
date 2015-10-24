@@ -11,16 +11,14 @@ class AddArticleCollectionTest extends \PHPUnit_Framework_TestCase
 {
     private $acr;
     private $fuf;
-    private $acf;
     private $cb;
 
     public function setUp()
     {
         $this->acr = new FakeArticleCollectionRepository();
         $this->fuf = new FakeUrlFetcher();
-        $this->acf = new ArticleCollectionFactory();
         $this->cb = new CommandBus();
-        $this->cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler($this->acr, $this->acf, $this->fuf));
+        $this->cb->register('Aco\Command\AddArticleCollectionCommand', new AddArticleCollectionHandler($this->acr, $this->fuf));
     }
 
     /**

@@ -2,11 +2,12 @@
 
 namespace Aco\Handler;
 
+use Rhumsaa\Uuid\Uuid;
 use Aco\Handler;
 use Aco\Command\AddArticleCollectionCommand;
 use Aco\ArticleCollectionRepository;
-use Aco\ArticleCollectionFactory;
 use Aco\Article;
+use Aco\ArticleCollection;
 use Aco\Url;
 use Aco\UrlFetcher;
 
@@ -16,14 +17,11 @@ class AddArticleCollectionHandler implements Handler
      * @var ArticleCollectionRepository
      */
     private $articleCollectionRepository;
-    private $articleCollectionFactory;
 
     public function __construct(ArticleCollectionRepository $articleCollectionRepository,
-                                ArticleCollectionFactory $articleCollectionFactory,
                                 UrlFetcher $urlFetcher)
     {
         $this->articleCollectionRepository = $articleCollectionRepository;
-        $this->articleCollectionFactory = $articleCollectionFactory;
         $this->urlFetcher = $urlFetcher;
     }
 
@@ -47,7 +45,9 @@ class AddArticleCollectionHandler implements Handler
                 $originalContent
             );
         }
-        $articleCollection = $this->articleCollectionFactory->make(
+        $articleCollection = new ArticleCollection(
+            Uuid::uuid4(),
+            new \DateTime(),
             $command->title,
             $command->description,
             $articles,
