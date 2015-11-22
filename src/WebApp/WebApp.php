@@ -18,8 +18,8 @@ class WebApp
     public function start()
     {
         $dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/', [$this->htmlController, 'getArticleCollections']);
-            $r->addRoute('GET', '/article-collections/{uuid}', [$this->htmlController, 'getArticleCollection']);
+            $r->addRoute('GET', '/', [$this->htmlController, 'getArticles']);
+            $r->addRoute('GET', '/article-collections/{uuid}', [$this->htmlController, 'getArticle']);
 
             $r->addRoute('GET', '/feed', [$this->feedController, 'getArticleCollections']);
         });

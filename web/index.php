@@ -5,8 +5,8 @@ require __DIR__.'/../vendor/autoload.php';
 if (file_exists(__DIR__.'/../.env')) {
     \Dotenv::load(__DIR__.'/..');
 }
-//\Dotenv::required('REPOSITORY_PATH');
-\Dotenv::required('DATABASE_URL');
+\Dotenv::required('REPOSITORY_PATH');
+//\Dotenv::required('DATABASE_URL');
 \Dotenv::required('AUTH_USE');
 
 if (getenv('AUTH_USE') === 'true') {
@@ -26,20 +26,11 @@ if (getenv('AUTH_USE') === 'true') {
     }
 }
 
-$dburl = parse_url(getenv('DATABASE_URL'));
-
 $inj = new Auryn\Injector();
-$inj->share('PDO');
-$inj->define('PDO', [
-    'pgsql:dbname='.ltrim($dburl['path'], '/').';host='.$dburl['host'],
-    $dburl['user'],
-    $dburl['pass'],
+$inj->define('Aco\Infra\FilesystemArticleRepo', [
+		':file' => getenv('REPOSITORY_PATH'),
 ]);
-//$inj->define('Infra\SerializedArticleCollectionRepository', [
-//		':file' => getenv('REPOSITORY_PATH'),
-//]);
-$inj->alias('Aco\ArticleCollectionRepository', 'Infra\PgsqlArticleCollectionRepository');
-$inj->alias('AcoQuery\QueryService', 'Infra\PgsqlQueryService');
+$inj->alias('AcoQuery\QueryService', 'Aco\Infra\FilesystemArticleRepo');
 
 $inj->delegate('Mustache_Engine', function () {
     return new Mustache_Engine(array(

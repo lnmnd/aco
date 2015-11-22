@@ -3,11 +3,12 @@
 namespace Aco\Infra;
 
 use Aco\Domain\Aco\ArticleRepo;
+use AcoQuery\QueryService;
 use Aco\Domain\Aco\Article;
 use Aco\Domain\Aco\Exception\ArticleDoesNotExistException;
 use Rhumsaa\Uuid\Uuid;
 
-class FilesystemArticleRepo implements ArticleRepo
+class FilesystemArticleRepo implements ArticleRepo, QueryService
 {
     private $file;
 
@@ -67,9 +68,36 @@ class FilesystemArticleRepo implements ArticleRepo
         throw new ArticleDoesNotExistException();
     }
 
-    public function findAll()
+    public function findArticles($offset = 0, $limit = 0)
     {
-        return $this->loadArticles();
+        $xs = $this->loadArticles();
+
+        return array_map(function (Article $x) {
+            return new \AcoQuery\FullArticle(
+                    $x->getUuid()->toString(),
+                    $x->getArticleSource()->getUrl()->getUrl(),
+                    $x->getTitle(),
+                    $x->getArticleSource()->getContent(),
+                    $x->getContent()
+                    );
+        }, $xs);
+    }
+
+    public function findArticle($uuid)
+    {
+        $xs = $this->loadArticles();
+        /** @var Article $x */
+        foreach ($xs as $x) {
+            if ($x->getUuid()->toString() === $uuid) {
+                return  new \AcoQuery\FullArticle(
+                    $x->getUuid()->toString(),
+                    $x->getArticleSource()->getUrl()->getUrl(),
+                    $x->getTitle(),
+                    $x->getArticleSource()->getContent(),
+                    $x->getContent()
+                    );
+            }
+        }
     }
 
     private function loadArticles()

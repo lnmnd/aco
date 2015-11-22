@@ -12,5 +12,5 @@ interface QueryService
      *
      * @return FullArticle[]
      */
-    public function getArticles($offset = 0, $limit = 0);
+    public function findArticles($offset = 0, $limit = 0);
 }

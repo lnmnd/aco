@@ -5,7 +5,7 @@ namespace WebApp;
 use AcoQuery\QueryService;
 use Aco\CommandBus;
 use Aco\Command\AddArticleCollectionCommand;
-use AcoQuery\Exception\ArticleCollectionNotFoundException;
+use AcoQuery\Exception\ArticleNotFoundException;
 
 class HtmlController
 {
@@ -29,21 +29,21 @@ class HtmlController
         };
     }
 
-    public function getArticleCollections()
+    public function getArticles()
     {
         echo $this->renderContent(
             'index.html',
-            ['acos' => $this->queryService->getArticleCollections()]
+            ['articles' => $this->queryService->findArticles()]
         );
     }
 
-    public function getArticleCollection($uuid)
+    public function getArticle($uuid)
     {
         try {
             echo $this->renderContent(
-                'aco.html',
-                ['aco' => $this->queryService->getArticleCollection($uuid)]);
-        } catch (ArticleCollectionNotFoundException $e) {
+                'article.html',
+                ['article' => $this->queryService->findArticle($uuid)]);
+        } catch (ArticleNotFoundException $e) {
             header('HTTP/1.0. 404 Not Found');
 
             echo $this->renderContent('404.html', []);

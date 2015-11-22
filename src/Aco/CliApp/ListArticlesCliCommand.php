@@ -28,7 +28,7 @@ class ListArticlesCliCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Articles:');
-        $xs = $this->repo->findAll();
+        $xs = $this->repo->findArticles();
 
         /*
          * @var Article $x
