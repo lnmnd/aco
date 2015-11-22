@@ -6,13 +6,11 @@ use FastRoute\Dispatcher;
 
 class WebApp
 {
-    private $apiController;
     private $htmlController;
     private $feedController;
 
-    public function __construct(ApiController $apiController, HtmlController $htmlController, FeedController $feedController)
+    public function __construct(HtmlController $htmlController, FeedController $feedController)
     {
-        $this->apiController = $apiController;
         $this->htmlController = $htmlController;
         $this->feedController = $feedController;
     }
@@ -20,19 +18,8 @@ class WebApp
     public function start()
     {
         $dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
-            $r->addRoute('OPTIONS', '/api/article-collections', [$this->apiController, 'optionArticleCollection']);
-            $r->addRoute('POST', '/api/article-collections', [$this->apiController, 'postArticleCollection']);
-            $r->addRoute('GET', '/api/article-collections', [$this->apiController, 'getArticleCollections']);
-            $r->addRoute('GET', '/api/article-collections/{uuid}', [$this->apiController, 'getArticleCollection']);
-            $r->addRoute('GET', '/api/tags', [$this->apiController, 'getTags']);
-            $r->addRoute('GET', '/api/tags/{tag}', [$this->apiController, 'getTagsArticleCollections']);
-
             $r->addRoute('GET', '/', [$this->htmlController, 'getArticleCollections']);
             $r->addRoute('GET', '/article-collections/{uuid}', [$this->htmlController, 'getArticleCollection']);
-            $r->addRoute('GET', '/add', [$this->htmlController, 'addArticleCollection']);
-            $r->addRoute('POST', '/add', [$this->htmlController, 'addArticleCollection']);
-            $r->addRoute('GET', '/tags', [$this->htmlController, 'getTags']);
-            $r->addRoute('GET', '/tags/{tag}', [$this->htmlController, 'getTagsArticleCollections']);
 
             $r->addRoute('GET', '/feed', [$this->feedController, 'getArticleCollections']);
         });

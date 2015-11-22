@@ -40,10 +40,6 @@ $inj->define('PDO', [
 //]);
 $inj->alias('Aco\ArticleCollectionRepository', 'Infra\PgsqlArticleCollectionRepository');
 $inj->alias('AcoQuery\QueryService', 'Infra\PgsqlQueryService');
-$inj->alias('Aco\UrlFetcher', 'Infra\GuzzleUrlFetcher');
-$inj->define('Aco\CommandBus', [
-    ':handlers' => [['Aco\Command\AddArticleCollectionCommand', $inj->make('Aco\Handler\AddArticleCollectionHandler')]],
-]);
 
 $inj->delegate('Mustache_Engine', function () {
     return new Mustache_Engine(array(
