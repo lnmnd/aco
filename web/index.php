@@ -28,7 +28,7 @@ if (getenv('AUTH_USE') === 'true') {
 
 $inj = new Auryn\Injector();
 $inj->define('Aco\Infra\FilesystemArticleRepo', [
-		':file' => getenv('REPOSITORY_PATH'),
+        ':file' => getenv('REPOSITORY_PATH'),
 ]);
 $inj->alias('AcoQuery\QueryService', 'Aco\Infra\FilesystemArticleRepo');
 

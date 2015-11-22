@@ -3,21 +3,17 @@
 namespace WebApp;
 
 use AcoQuery\QueryService;
-use Aco\CommandBus;
-use Aco\Command\AddArticleCollectionCommand;
 use AcoQuery\Exception\ArticleNotFoundException;
 
 class HtmlController
 {
     private $mustache;
-    private $commandBus;
     private $queryService;
     private $blockContent;
 
-    public function __construct(\Mustache_Engine $mustache, CommandBus $commandBus, QueryService $queryService)
+    public function __construct(\Mustache_Engine $mustache, QueryService $queryService)
     {
         $this->mustache = $mustache;
-        $this->commandBus = $commandBus;
         $this->queryService = $queryService;
 
         $this->blockContent = function ($tmpl, $helper) {
@@ -49,7 +45,6 @@ class HtmlController
             echo $this->renderContent('404.html', []);
         }
     }
-
 
     private function render($template, $data)
     {

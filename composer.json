@@ -19,7 +19,6 @@
     },    
 
     "autoload": {
-        "psr-4": { "": "src/" },
-	"files": ["src/bootstrap.php"]
-    }
+        "psr-4": { "": "src/" }
+	}
 }
