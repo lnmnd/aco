@@ -4,6 +4,7 @@ namespace Aco\App\Handler;
 
 use Aco\Domain\Aco\ArticleRepo;
 use Aco\App\Command\RemoveArticleCommand;
+use Rhumsaa\Uuid\Uuid;
 
 class RemoveArticleHandler
 {
@@ -16,7 +17,8 @@ class RemoveArticleHandler
 
     public function handle(RemoveArticleCommand $command)
     {
-        $article = $this->acoRepo->find($command->uuid);
+        $uuid = Uuid::fromString($command->uuid);
+        $article = $this->acoRepo->find($uuid);
         $article->remove();
         $this->acoRepo->store($article);
     }
