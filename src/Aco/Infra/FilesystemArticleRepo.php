@@ -71,6 +71,10 @@ class FilesystemArticleRepo implements ArticleRepo, QueryService
     public function findArticles($offset = 0, $limit = 0)
     {
         $xs = $this->loadArticles();
+        $xs = array_filter($xs, function (Article $x) {
+            return !$x->isRemoved();
+        });
+        $xs = array_values($xs);
 
         return array_map(function (Article $x) {
             return new \AcoQuery\FullArticle(
