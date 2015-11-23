@@ -19,7 +19,7 @@ class ArticleSpec extends ObjectBehavior
         $uuid = Uuid::fromString('FE755198-9089-11E5-999C-0341358CC448');
         $this->getUuid()->shouldEqualUuid($uuid);
         $this->getTitle()->shouldReturn('title');
-        $this->getDate()->shouldReturn($date);
+        $this->getCreatedAt()->shouldReturn($date);
         $this->getArticleSource()->shouldReturn($articleSource);
         $this->getContent()->shouldReturn('content');
         $this->shouldNotBeRemoved();

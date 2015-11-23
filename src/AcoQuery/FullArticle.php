@@ -7,14 +7,16 @@ class FullArticle
     public $uuid;
     public $url;
     public $title;
+    public $createdAt;
     public $original_content;
     public $content;
 
-    public function __construct($uuid, $url, $title, $original_content, $content)
+    public function __construct($uuid, $url, $title, $createdAt, $original_content, $content)
     {
         $this->uuid = $uuid;
         $this->url = $url;
         $this->title = $title;
+        $this->createdAt = $createdAt;
         $this->original_content = $original_content;
         $this->content = $content;
     }

@@ -8,16 +8,16 @@ class Article
 {
     private $uuid;
     private $title;
-    private $date;
+    private $createdAt;
     private $articleSource;
     private $content;
     private $removed;
 
-    public function __construct(Uuid $uuid, $title, \DateTime $date, ArticleSource $articleSource, $content)
+    public function __construct(Uuid $uuid, $title, \DateTime $createdAt, ArticleSource $articleSource, $content)
     {
         $this->uuid = $uuid;
         $this->title = $title;
-        $this->date = $date;
+        $this->createdAt = $createdAt;
         $this->articleSource = $articleSource;
         $this->content = $content;
         $this->removed = false;
@@ -33,9 +33,9 @@ class Article
         return $this->title;
     }
 
-    public function getDate()
+    public function getCreatedAt()
     {
-        return $this->date;
+        return $this->createdAt;
     }
 
     public function getArticleSource()

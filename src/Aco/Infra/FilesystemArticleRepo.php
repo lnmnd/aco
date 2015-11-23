@@ -77,6 +77,7 @@ class FilesystemArticleRepo implements ArticleRepo, QueryService
                     $x->getUuid()->toString(),
                     $x->getArticleSource()->getUrl()->getUrl(),
                     $x->getTitle(),
+                    $x->getCreatedAt(),
                     $x->getArticleSource()->getContent(),
                     $x->getContent()
                     );
@@ -93,6 +94,7 @@ class FilesystemArticleRepo implements ArticleRepo, QueryService
                     $x->getUuid()->toString(),
                     $x->getArticleSource()->getUrl()->getUrl(),
                     $x->getTitle(),
+                    $x->getCreatedAt(),
                     $x->getArticleSource()->getContent(),
                     $x->getContent()
                     );

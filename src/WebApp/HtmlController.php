@@ -36,9 +36,11 @@ class HtmlController
     public function getArticle($uuid)
     {
         try {
+            $article = $this->queryService->findArticle($uuid);
+            $article->createdAt = $article->createdAt->format('Y-m-d');
             echo $this->renderContent(
                 'article.html',
-                ['article' => $this->queryService->findArticle($uuid)]);
+                ['article' => $article]);
         } catch (ArticleNotFoundException $e) {
             header('HTTP/1.0. 404 Not Found');
 
