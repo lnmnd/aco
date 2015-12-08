@@ -21,6 +21,6 @@ class DeleteArticleHandlerSpec extends ObjectBehavior
         $command->uuid = 'FE755198-9089-11E5-999C-0341358CC448';
         $articleRepo->find(Argument::type('Rhumsaa\Uuid\Uuid'))->willReturn($article);
         $articleRepo->remove($article)->shouldBeCalled();
-        $this->handle($command);
+        $this($command);
     }
 }

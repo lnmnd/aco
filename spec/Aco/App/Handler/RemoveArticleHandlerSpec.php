@@ -21,6 +21,6 @@ class RemoveArticleHandlerSpec extends ObjectBehavior
         $articleRepo->find(Argument::type('Rhumsaa\Uuid\Uuid'))->willReturn($article);
         $article->remove()->shouldBeCalled();
         $articleRepo->store($article)->shouldBeCalled();
-        $this->handle($command);
+        $this($command);
     }
 }

@@ -22,7 +22,7 @@ class AddArticleHandler
         $this->urlFetcher = $urlFetcher;
     }
 
-    public function handle(AddArticleCommand $command)
+    public function __invoke(AddArticleCommand $command)
     {
         $title = $command->title;
         $url = new Url($command->url);

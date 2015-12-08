@@ -20,6 +20,6 @@ class CommandBus
 
     public function handle($command)
     {
-        return $this->handlers[get_class($command)]->handle($command);
+        return $this->handlers[get_class($command)]($command);
     }
 }

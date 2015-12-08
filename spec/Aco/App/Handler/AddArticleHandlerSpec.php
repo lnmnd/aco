@@ -21,7 +21,7 @@ class AddArticleHandlerSpec extends ObjectBehavior
         $command->url = 'http://url';
         $urlFetcher->fetch(Argument::type('Aco\Domain\Aco\Url'))->willReturn('content');
         $articleRepo->store(Argument::type('Aco\Domain\Aco\Article'))->shouldBeCalled();
-        $this->handle($command)->shouldBeUuidString();
+        $this($command)->shouldBeUuidString();
     }
 
     public function getMatchers()

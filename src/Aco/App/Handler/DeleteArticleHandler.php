@@ -15,7 +15,7 @@ class DeleteArticleHandler
         $this->acoRepo = $acoRepo;
     }
 
-    public function handle(DeleteArticleCommand $command)
+    public function __invoke(DeleteArticleCommand $command)
     {
         $uuid = Uuid::fromString($command->uuid);
         $article = $this->acoRepo->find($uuid);
