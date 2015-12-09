@@ -26,17 +26,70 @@ if (getenv('AUTH_USE') === 'true') {
     }
 }
 
-$inj = new Auryn\Injector();
-$inj->define('Aco\Infra\FilesystemArticleRepo', [
-        ':file' => getenv('REPOSITORY_PATH'),
-]);
-$inj->alias('AcoQuery\QueryService', 'Aco\Infra\FilesystemArticleRepo');
+$container = new \Slim\Container();
+$container['settings']['displayErrorDetails'] = true;
+$container['queryService'] = function ($c) {
+    return new Aco\Infra\FilesystemArticleRepo(
+            getenv('REPOSITORY_PATH')
+            );
+};
+$container['view'] = function ($c) {
+    $view = new \Slim\Views\Twig(__DIR__.'/../templates');
+    $view->addExtension(new \Slim\Views\TwigExtension(
+            $c['router'],
+            $c['request']->getUri()
+            ));
 
-$inj->delegate('Mustache_Engine', function () {
-    return new Mustache_Engine(array(
-        'loader' => new Mustache_Loader_FilesystemLoader(__DIR__.'/../templates'),
-    ));
-});
+    return $view;
+};
 
-$app = $inj->make('WebApp\WebApp');
-$app->start();
+$app = new \Slim\App($container);
+
+$app->get('/', function ($req, $res, $args) {
+    $ctx = [
+        'articles' => $this->queryService->findArticles(),
+            ];
+
+    return $this->view->render($res, 'index.html.twig', $ctx);
+})->setName('index');
+
+$app->get('/article/{uuid}/', function ($req, $res, $args) {
+    $uuid = $args['uuid'];
+    try {
+        $article = $this->queryService->findArticle($uuid);
+        $article->createdAt = $article->createdAt->format('Y-m-d');
+        $ctx = [
+                'article' => $article,
+        ];
+
+        return $this->view->render($res, 'article.html.twig', $ctx);
+    } catch (\Aco\Domain\Aco\Exception\ArticleDoesNotExistException $e) {
+        return $res->withStatus(404);
+    }
+})->setName('article');
+
+$app->get('/feed/', function ($req, $res, $args) {
+    $xml = new \SimpleXMLElement('<xml/>');
+    $feed = $xml->addChild('feed');
+    $feed->addAttribute('xmlns', 'http://www.w3.org/2005/Atom');
+    $feed->addChild('title', 'Article Collections');
+
+    $articles = $this->queryService->findArticles();
+    foreach ($articles as $a) {
+        $entry = $feed->addChild('entry');
+        $entry->addChild('title', $a->title);
+        $link = $entry->addChild('link');
+        $link->addAttribute('href', $a->url);
+        $link->addAttribute('rel', 'alternate');
+        $link->addAttribute('type', 'text/html');
+        $content = $entry->addChild('content', $a->content);
+        $content->addAttribute('type', 'html');
+    }
+
+    $body = $res->getBody();
+    $body->write($xml->asXML());
+
+    return $res->withHeader('Content-Type', 'application/atom+xml');
+})->setName('feed');
+
+$app->run();

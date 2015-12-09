@@ -104,6 +104,7 @@ class FilesystemArticleRepo implements ArticleRepo, QueryService
                     );
             }
         }
+        throw new ArticleDoesNotExistException();
     }
 
     private function loadArticles()

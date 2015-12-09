@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  <h1>Articles</h1>
+  <a href="{{path_for('feed')}}">feed</a>
+  <div>
+    <ul>
+      {% for article in articles %}
+        <li><a href="{{path_for('article', {uuid: article.uuid})}}">{{article.title}}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
+  
