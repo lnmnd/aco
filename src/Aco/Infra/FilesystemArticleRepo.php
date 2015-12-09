@@ -41,7 +41,6 @@ class FilesystemArticleRepo implements ArticleRepo, QueryService
 
     public function remove(Article $article)
     {
-        var_dump($article->getUuid()->toString());
         $xs = $this->loadArticles();
         $i = 0;
         foreach ($xs as $x) {
