@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "00d066c5637844cd80aad4e9e2b38d84",
-    "content-hash": "9f08e392de8f35f294569468e7b89344",
+    "hash": "5d2e4609db357c90f9a0d46a1350f835",
+    "content-hash": "2ae5efcc408f37ffbf8c5812dcc2e123",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -442,61 +442,6 @@
                 "uuid"
             ],
             "time": "2015-08-31 13:34:50"
-        },
-        {
-            "name": "rdlowrey/auryn",
-            "version": "v0.15.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/rdlowrey/auryn.git",
-                "reference": "be3807b62a6991e61151b55b6974dc1289afabd5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/rdlowrey/auryn/zipball/be3807b62a6991e61151b55b6974dc1289afabd5",
-                "reference": "be3807b62a6991e61151b55b6974dc1289afabd5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Auryn\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dan Ackroyd",
-                    "email": "Danack@basereality.com",
-                    "homepage": "http://www.basereality.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Daniel Lowrey",
-                    "email": "rdlowrey@gmail.com",
-                    "role": "Creator / Main Developer"
-                },
-                {
-                    "name": "Levi Morrison",
-                    "email": "levim@php.net",
-                    "homepage": "http://morrisonlevi.github.com/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Auryn is a dependency injector for bootstrapping object-oriented PHP applications.",
-            "homepage": "https://github.com/rdlowrey/Auryn",
-            "keywords": [
-                "dependency injection",
-                "dic",
-                "ioc"
-            ],
-            "time": "2015-05-06 19:44:56"
         },
         {
             "name": "react/promise",

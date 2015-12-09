@@ -11,39 +11,55 @@ if (file_exists(__DIR__.'/.env')) {
 
 $dburl = parse_url(getenv('DATABASE_URL'));
 
-$inj = new Auryn\Injector();
+$container = new \Pimple\Container();
+$container['article_repo'] = function ($c) {
+    return new \Aco\Infra\FilesystemArticleRepo(getenv('REPOSITORY_PATH'));
+};
+$container['url_fetcher'] = function ($c) {
+    return new \Aco\Infra\GuzzleUrlFetcher();
+};
+$container['command_bus'] = function ($c) {
+    return new \Aco\App\CommandBus([
+        ['Aco\App\Command\AddArticleCommand',
+         new \Aco\App\Handler\AddArticleHandler($c['article_repo'], $c['url_fetcher']), ],
+        ['Aco\App\Command\DeleteArticleCommand',
+         new \Aco\App\Handler\DeleteArticleHandler($c['article_repo']), ],
+        ['Aco\App\Command\RemoveArticleCommand',
+         new \Aco\App\Handler\RemoveArticleHandler($c['article_repo']), ],
+    ]);
+};
 
-$inj->define('Aco\Infra\FilesystemArticleRepo', [
-        ':file' => getenv('REPOSITORY_PATH'),
-]);
-$inj->alias('Aco\App\UrlFetcher', 'Aco\Infra\GuzzleUrlFetcher');
-$inj->alias('Aco\Domain\Aco\ArticleRepo', 'Aco\Infra\FilesystemArticleRepo');
-$inj->define('Aco\App\CommandBus', [
-        ':handlers' => [
-                ['Aco\App\Command\AddArticleCommand',
-                $inj->make('Aco\App\Handler\AddArticleHandler'), ],
-                ['Aco\App\Command\DeleteArticleCommand',
-                $inj->make('Aco\App\Handler\DeleteArticleHandler'), ],
-                ['Aco\App\Command\RemoveArticleCommand',
-                $inj->make('Aco\App\Handler\RemoveArticleHandler'), ],
-        ],
-]);
-$inj->prepare('Aco\CliApp\AddArticleCliCommand', function ($command, $inj) {
-    $command->setCommandBus($inj->make('Aco\App\CommandBus'));
-});
-$inj->prepare('Aco\CliApp\DeleteArticleCliCommand', function ($command, $inj) {
-    $command->setCommandBus($inj->make('Aco\App\CommandBus'));
-});
-$inj->prepare('Aco\CliApp\RemoveArticleCliCommand', function ($command, $inj) {
-    $command->setCommandBus($inj->make('Aco\App\CommandBus'));
-});
- $inj->prepare('Aco\CliApp\ListArticlesCliCommand', function ($command, $inj) {
-    $command->setRepo($inj->make('Aco\Domain\Aco\ArticleRepo'));
-});
+$container['command.add_article'] = function ($c) {
+    $cmd = new \Aco\CliApp\AddArticleCliCommand();
+    $cmd->setCommandBus($c['command_bus']);
+
+    return $cmd;
+};
+
+$container['command.delete_article'] = function ($c) {
+    $cmd = new \Aco\CliApp\DeleteArticleCliCommand();
+    $cmd->setCommandBus($c['command_bus']);
+
+    return $cmd;
+};
+
+$container['command.remove_article'] = function ($c) {
+    $cmd = new \Aco\CliApp\RemoveArticleCliCommand();
+    $cmd->setCommandBus($c['command_bus']);
+
+    return $cmd;
+};
+
+$container['command.list_articles'] = function ($c) {
+        $cmd = new \Aco\CliApp\ListArticlesCliCommand();
+        $cmd->setRepo($c['article_repo']);
+
+        return $cmd;
+};
 
 $application = new Application();
-$application->add($inj->make('Aco\CliApp\AddArticleCliCommand'));
-$application->add($inj->make('Aco\CliApp\DeleteArticleCliCommand'));
-$application->add($inj->make('Aco\CliApp\RemoveArticleCliCommand'));
-$application->add($inj->make('Aco\CliApp\ListArticlesCliCommand'));
+$application->add($container['command.add_article']);
+$application->add($container['command.delete_article']);
+$application->add($container['command.remove_article']);
+$application->add($container['command.list_articles']);
 $application->run();
