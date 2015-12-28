@@ -1,7 +1,6 @@
 {
     "require": {
 	"php": "~5.5",
-	"ext-pgsql": "*",
 	"ramsey/uuid": "~2.0",
 	"symfony/console": "~2.3.0",
 	"guzzlehttp/guzzle": "~5.0",
