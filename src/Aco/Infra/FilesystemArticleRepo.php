@@ -74,6 +74,9 @@ class FilesystemArticleRepo implements ArticleRepo, QueryService
             return !$x->isRemoved();
         });
         $xs = array_values($xs);
+        usort($xs, function (Article $a, Article $b) {
+           return $a->getCreatedAt() < $b->getCreatedAt();
+        });
 
         return array_map(function (Article $x) {
             return new \AcoQuery\FullArticle(
