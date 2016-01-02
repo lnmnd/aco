@@ -11,18 +11,16 @@ class FullArticle
     public $original_content;
     public $content;
 
-    public function __construct($uuid, $url, $title, $created_at, $original_content, $content)
+    public static function build($uuid, $url, $title, $created_at, $original_content, $content)
     {
-        $this->uuid = $uuid;
-        $this->url = $url;
-        $this->title = $title;
-        $this->created_at = $created_at;
-        $this->original_content = $original_content;
-        $this->content = $content;
-    }
+        $obj = new self();
+        $obj->uuid = $uuid;
+        $obj->url = $url;
+        $obj->title = $title;
+        $obj->created_at = $created_at;
+        $obj->original_content = $original_content;
+        $obj->content = $content;
 
-    public static function fromArray($x)
-    {
-        return new self($x['uuid'], $x['url'], $x['title'], $x['original_content'], $x['content']);
+        return $obj;
     }
 }

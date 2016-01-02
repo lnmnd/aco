@@ -8,6 +8,7 @@ use Aco\Domain\Aco\Article;
 use Aco\Domain\Aco\Exception\ArticleDoesNotExistException;
 use Rhumsaa\Uuid\Uuid;
 use AcoQuery\ListArticle;
+use AcoQuery\FullArticle;
 
 class FilesystemArticleRepo implements ArticleRepo, QueryService
 {
@@ -94,7 +95,7 @@ class FilesystemArticleRepo implements ArticleRepo, QueryService
         /** @var Article $x */
         foreach ($xs as $x) {
             if ($x->getUuid()->toString() === $uuid) {
-                return  new \AcoQuery\FullArticle(
+                return FullArticle::build(
                     $x->getUuid()->toString(),
                     $x->getArticleSource()->getUrl()->getUrl(),
                     $x->getTitle(),
