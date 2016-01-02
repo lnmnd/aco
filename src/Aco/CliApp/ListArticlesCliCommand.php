@@ -34,7 +34,7 @@ class ListArticlesCliCommand extends Command
          * @var Article $x
          */
         foreach ($xs as $x) {
-            $txt = '- '.$x->uuid.' ['.$x->createdAt->format('i:s').'] '.$x->title;
+            $txt = '- '.$x->uuid.' ['.$x->created_at->format('i:s').'] '.$x->title;
             $output->writeln($txt);
         }
     }

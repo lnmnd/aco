@@ -55,7 +55,7 @@ $app->get('/article/{uuid}/', function ($req, $res, $args) {
     $uuid = $args['uuid'];
     try {
         $article = $this->queryService->findArticle($uuid);
-        $article->createdAt = $article->createdAt->format('Y-m-d');
+        $article->created_at = $article->created_at->format('Y-m-d');
         $ctx = [
                 'article' => $article,
         ];
