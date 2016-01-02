@@ -3,8 +3,7 @@
 if (file_exists(__DIR__.'/.env')) {
     \Dotenv::load(__DIR__);
 }
-\Dotenv::required('REPOSITORY_PATH');
-//\Dotenv::required('DATABASE_URL');
+\Dotenv::required('DATABASE_URL');
 \Dotenv::required('AUTH_USE');
 
 if (getenv('AUTH_USE') === 'true') {
@@ -27,9 +26,7 @@ if (getenv('AUTH_USE') === 'true') {
 $container = new \Slim\Container();
 $container['settings']['displayErrorDetails'] = true;
 $container['queryService'] = function ($c) {
-    return new Aco\Infra\FilesystemArticleRepo(
-            getenv('REPOSITORY_PATH')
-            );
+    return new \Aco\Infra\DbalArticleRepo(getenv('DATABASE_URL'));
 };
 $container['view'] = function ($c) {
     $view = new \Slim\Views\Twig(__DIR__.'/templates');

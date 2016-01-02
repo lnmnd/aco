@@ -7,13 +7,11 @@ use Symfony\Component\Console\Application;
 if (file_exists(__DIR__.'/.env')) {
     \Dotenv::load(__DIR__);
 }
-\Dotenv::required('REPOSITORY_PATH');
-
-$dburl = parse_url(getenv('DATABASE_URL'));
+\Dotenv::required('DATABASE_URL');
 
 $container = new \Pimple\Container();
 $container['article_repo'] = function ($c) {
-    return new \Aco\Infra\FilesystemArticleRepo(getenv('REPOSITORY_PATH'));
+    return new \Aco\Infra\DbalArticleRepo(getenv('DATABASE_URL'));
 };
 $container['url_fetcher'] = function ($c) {
     return new \Aco\Infra\GuzzleUrlFetcher();

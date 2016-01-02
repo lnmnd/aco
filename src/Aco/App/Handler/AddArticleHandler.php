@@ -29,6 +29,7 @@ class AddArticleHandler
         $uuid = Uuid::uuid4();
         $date = new \DateTime();
         $originalContent = $this->urlFetcher->fetch($url);
+
         $articleSource = new ArticleSource($url, $originalContent);
         $content = ContentExtractor::extractContent($originalContent);
         $article = new Article($uuid, $title, $date, $articleSource, $content);
