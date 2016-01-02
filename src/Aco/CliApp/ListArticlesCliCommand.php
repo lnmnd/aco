@@ -6,7 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Aco\Domain\Aco\ArticleRepo;
-use Aco\Domain\Aco\Article;
+use AcoQuery\ListArticle;
 
 class ListArticlesCliCommand extends Command
 {
@@ -31,7 +31,7 @@ class ListArticlesCliCommand extends Command
         $xs = $this->repo->findArticles();
 
         /*
-         * @var Article $x
+         * @var ListArticle $x
          */
         foreach ($xs as $x) {
             $txt = '- '.$x->uuid.' '.$x->title;
