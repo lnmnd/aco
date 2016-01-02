@@ -2,6 +2,8 @@
 
 namespace AcoQuery;
 
+use Aco\Domain\Aco\Exception\ArticleDoesNotExistException;
+
 interface QueryService
 {
     /**
@@ -13,4 +15,13 @@ interface QueryService
      * @return ListArticle[]
      */
     public function findArticles($offset = 0, $limit = 0);
+
+    /**
+     * @param string $uuid
+     *
+     * @return FullArticle
+     *
+     * @throws ArticleDoesNotExistException
+     */
+    public function findArticle($uuid);
 }
