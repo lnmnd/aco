@@ -7,6 +7,7 @@ use AcoQuery\QueryService;
 use Aco\Domain\Aco\Article;
 use Aco\Domain\Aco\Exception\ArticleDoesNotExistException;
 use Rhumsaa\Uuid\Uuid;
+use AcoQuery\ListArticle;
 
 class FilesystemArticleRepo implements ArticleRepo, QueryService
 {
@@ -79,14 +80,11 @@ class FilesystemArticleRepo implements ArticleRepo, QueryService
         });
 
         return array_map(function (Article $x) {
-            return new \AcoQuery\FullArticle(
-                    $x->getUuid()->toString(),
-                    $x->getArticleSource()->getUrl()->getUrl(),
-                    $x->getTitle(),
-                    $x->getCreatedAt(),
-                    $x->getArticleSource()->getContent(),
-                    $x->getContent()
-                    );
+            $obj = new ListArticle();
+            $obj->uuid = $x->getUuid()->toString();
+            $obj->title = $x->getTitle();
+
+            return $obj;
         }, $xs);
     }
 

@@ -10,7 +10,7 @@ interface QueryService
      * @param int $offset
      * @param int $limit
      *
-     * @return FullArticle[]
+     * @return ListArticle[]
      */
     public function findArticles($offset = 0, $limit = 0);
 }
