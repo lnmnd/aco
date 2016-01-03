@@ -5,6 +5,7 @@ if (file_exists(__DIR__.'/.env')) {
 }
 \Dotenv::required('DATABASE_URL');
 \Dotenv::required('AUTH_USE');
+\Dotenv::required('DISPLAY_ERROR_DETAILS');
 
 if (getenv('AUTH_USE') === 'true') {
     \Dotenv::required('AUTH_USER');
@@ -24,7 +25,9 @@ if (getenv('AUTH_USE') === 'true') {
 }
 
 $container = new \Slim\Container();
-$container['settings']['displayErrorDetails'] = true;
+if (getenv('DISPLAY_ERROR_DETAILS') === 'true') {
+    $container['settings']['displayErrorDetails'] = true;
+}
 $container['queryService'] = function ($c) {
     return new \Aco\Infra\DbalArticleRepo(getenv('DATABASE_URL'));
 };
